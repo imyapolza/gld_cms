@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.right_background {
+  background: url("../../public/right-side.png") no-repeat fixed right;
+}
