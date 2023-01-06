@@ -1,11 +1,14 @@
+import clsx from "clsx";
 import styles from "./styles.module.scss";
 
 interface Props {
   children: React.ReactNode;
   title: string;
+  height?: string;
+  className?: string;
 }
 
-const Modal = ({ children, title }: Props): JSX.Element => {
+const Modal = ({ children, title, height, className }: Props): JSX.Element => {
   return (
     <div id="openModal" className={styles.modal}>
       <div className={styles["modal-dialog"]}>
@@ -16,7 +19,12 @@ const Modal = ({ children, title }: Props): JSX.Element => {
               ×
             </a>
           </div>
-          <div className={styles["modal-body"]}>{children}</div>
+          <div
+            className={clsx(styles["modal-body"], className)}
+            style={{ height }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import ChangeTextArea from "components/ChangeTextarea/ChangeTextArea";
 import { h2 } from "constants/Index";
 import { useState } from "react";
-import styles from "styles/pages/admin/index.module.scss";
+import styles from "styles/pages/index.module.scss";
 
 export default function Home() {
   const [isChangeH2, setChangeH2] = useState<boolean>(false);
