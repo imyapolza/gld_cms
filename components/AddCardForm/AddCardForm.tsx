@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Button from "components/Button/Button";
 import { useEffect, useRef, useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
 
 const AddCardForm = () => {
@@ -11,11 +12,23 @@ const AddCardForm = () => {
   const [isFailedLoadSmall, setFailedLoadSMall] = useState<boolean>(false);
   const [isFailedLoadType, setFailedLoadType] = useState<boolean>(false);
 
-  const [characteristics, setCharacteristics] = useState<Array<number>>([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "test",
+  });
+
+  const onSubmit = (data: any) => console.log(data);
 
   useEffect(() => {
-    console.log("characteristics", characteristics);
-  }, [characteristics]);
+    console.log("errors", errors);
+  }, [errors]);
 
   const [dragActive, setDragActive] = useState<boolean>(false);
 
@@ -106,65 +119,79 @@ const AddCardForm = () => {
   };
 
   const onAddCharacteristic = () => {
-    setCharacteristics((prev) => [...prev, characteristics.length + 1]);
+    append({ name: "", image: "" });
   };
 
-  const onDeleteCharacteristic = () => {
-    setCharacteristics((prev) => [
-      ...prev.slice(0, characteristics.length - 1),
-    ]);
+  const onDeleteCharacteristic = (index: number) => {
+    remove(index);
   };
 
   return (
     <form
       className={styles["form-file-upload"]}
       onDragEnter={handleDrag}
-      onSubmit={(e) => console.log(e)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <label className={styles.label}>
           Название:
           <input
+            {...register("name", {
+              required: true,
+              maxLength: 30,
+            })}
             className={styles.name_input}
             type="text"
-            minLength={3}
-            maxLength={100}
             placeholder="Название двери..."
           />
+          {errors.name && (
+            <span className={styles.error}>
+              Это поле обязательно к заполнению
+            </span>
+          )}
         </label>
 
         <label className={styles.label}>
           Характеристики:
-          {characteristics.map((_, index) => (
-            <div className={styles.characteristics}>
-              <input
-                className={styles.name_input}
-                type="text"
-                minLength={3}
-                maxLength={100}
-                placeholder={`Заголовок ${index + 1}...`}
-              />
-              <input
-                className={styles.name_input}
-                type="text"
-                minLength={3}
-                maxLength={100}
-                placeholder={`Характеристика ${index + 1}...`}
-              />
-            </div>
-          ))}
+          {fields.map((field, index) => {
+            return (
+              <>
+                <div className={styles.characteristics} key={field.id}>
+                  <input
+                    key={field.id}
+                    {...register(`characteristics.${index}.name`)}
+                    className={styles.name_input}
+                    type="text"
+                    minLength={3}
+                    maxLength={100}
+                    placeholder={`Заголовок ${index + 1}...`}
+                  />
+                  <input
+                    key={
+                      field.id +
+                      Date.now().toString(36) +
+                      Math.random().toString(36).substring(2)
+                    }
+                    {...register(`characteristics.${index}.image`)}
+                    className={styles.name_input}
+                    type="text"
+                    minLength={3}
+                    maxLength={100}
+                    placeholder={`Характеристика ${index + 1}...`}
+                  />
+                </div>
+                <button
+                  className={styles.characteristics_delete}
+                  onClick={() => onDeleteCharacteristic(index)}
+                >
+                  Удалить характеристику
+                </button>
+              </>
+            );
+          })}
         </label>
 
         <div>
-          {characteristics.length >= 1 && (
-            <button
-              className={styles.characteristics_delete}
-              onClick={onDeleteCharacteristic}
-            >
-              Удалить характеристику
-            </button>
-          )}
-
           <Button onClick={onAddCharacteristic}>Добавить характеристику</Button>
         </div>
 
@@ -226,9 +253,15 @@ const AddCardForm = () => {
                 <button
                   className={styles["upload-button"]}
                   onClick={onButtonClick}
+                  type="button"
                 >
                   Загрузить
                 </button>
+                {errors.image && (
+                  <span className={styles.error}>
+                    Добавление изображения обязательно!
+                  </span>
+                )}
               </div>
             </label>
           </>
@@ -253,9 +286,11 @@ const AddCardForm = () => {
           )}
         </div>
 
-        <Button className={styles.button} width={"100%"}>
-          Сохранить
-        </Button>
+        {base64 && (
+          <Button className={styles.button} width={"100%"} type="submit">
+            Сохранить
+          </Button>
+        )}
       </div>
     </form>
   );
