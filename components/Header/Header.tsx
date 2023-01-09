@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import ChangeTextArea from "components/ChangeTextarea/ChangeTextArea";
 import { useState } from "react";
+import Link from "next/link";
 
 const Header = (): JSX.Element => {
   const router = useRouter();
@@ -23,14 +24,15 @@ const Header = (): JSX.Element => {
 
   return (
     <div className={styles.wrapper}>
-      <a href="/" className={styles.logo_block}>
+      <Link className={styles.logo_block} href="/">
         <DoorLogo color={"#6E9C9F"} width={30} height={30} />
         <h1 className={styles.title}>{title}</h1>
-      </a>
+      </Link>
+
       <ul className={styles.list}>
         {menu.map((name, index) => (
           <li key={index} className={clsx(styles.list_item)}>
-            <a
+            <Link
               className={clsx(styles.list_link, {
                 [styles.list_active]:
                   routerPaths[index as keyof typeof routerPaths] ===
@@ -39,7 +41,7 @@ const Header = (): JSX.Element => {
               href={routerPaths[index as keyof typeof routerPaths]}
             >
               {name}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

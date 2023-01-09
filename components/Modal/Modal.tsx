@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useRef } from "react";
 import styles from "./styles.module.scss";
 
 interface Props {

@@ -1,16 +1,31 @@
 import clsx from "clsx";
 import Button from "components/Button/Button";
+import LoadingDots from "components/LoadingDots/LoadingDots";
+import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
 
-const AddCardForm = () => {
+interface Props {
+  onRefetchInteriors?: () => void;
+  onSubmitAddDoor: (arg: any) => void;
+}
+
+const AddCardForm = ({
+  onRefetchInteriors,
+  onSubmitAddDoor,
+}: Props): JSX.Element => {
   const [isLoadingImage, setLoadingImage] = useState<boolean>(false);
   const [base64, setBase64] = useState<string>("");
+
+  const [blob, setBlob] = useState<Blob | null>(null);
 
   const [isFailedLoadSize, setFailedLoadSize] = useState<boolean>(false);
   const [isFailedLoadSmall, setFailedLoadSMall] = useState<boolean>(false);
   const [isFailedLoadType, setFailedLoadType] = useState<boolean>(false);
+
+  const [isLoadingAdd, setLoadingAdd] = useState<boolean>(false);
 
   const {
     register,
@@ -21,14 +36,25 @@ const AddCardForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "test",
+    name: "characteristics",
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = async ({ name, price, characteristics }: any) => {
+    let formData = new FormData();
 
-  useEffect(() => {
-    console.log("errors", errors);
-  }, [errors]);
+    if (blob) {
+      formData.append("file", blob);
+    }
+
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("characteristics", characteristics);
+
+    setLoadingAdd(true);
+
+    onSubmitAddDoor(formData);
+    setLoadingAdd(false);
+  };
 
   const [dragActive, setDragActive] = useState<boolean>(false);
 
@@ -66,6 +92,7 @@ const AddCardForm = () => {
             } else {
               if (typeof reader.result === "string") {
                 setBase64(reader.result);
+                setBlob(file);
               }
             }
             return true;
@@ -119,7 +146,7 @@ const AddCardForm = () => {
   };
 
   const onAddCharacteristic = () => {
-    append({ name: "", image: "" });
+    append({ name: "", value: "" });
   };
 
   const onDeleteCharacteristic = (index: number) => {
@@ -152,6 +179,22 @@ const AddCardForm = () => {
         </label>
 
         <label className={styles.label}>
+          Цена:
+          <input
+            {...register("price", {
+              required: true,
+              maxLength: 6,
+            })}
+            className={styles.name_input}
+            type="number"
+            placeholder="Цена..."
+          />
+          {errors.price && (
+            <span className={styles.error}>Максимум 6 цифр</span>
+          )}
+        </label>
+
+        <label className={styles.label}>
           Характеристики:
           {fields.map((field, index) => {
             return (
@@ -172,7 +215,7 @@ const AddCardForm = () => {
                       Date.now().toString(36) +
                       Math.random().toString(36).substring(2)
                     }
-                    {...register(`characteristics.${index}.image`)}
+                    {...register(`characteristics.${index}.value`)}
                     className={styles.name_input}
                     type="text"
                     minLength={3}
@@ -287,9 +330,15 @@ const AddCardForm = () => {
         </div>
 
         {base64 && (
-          <Button className={styles.button} width={"100%"} type="submit">
-            Сохранить
-          </Button>
+          <>
+            {isLoadingAdd ? (
+              <LoadingSpinner />
+            ) : (
+              <Button className={styles.button} width={"100%"} type="submit">
+                Сохранить
+              </Button>
+            )}
+          </>
         )}
       </div>
     </form>

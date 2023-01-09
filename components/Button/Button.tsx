@@ -7,6 +7,7 @@ interface Props {
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -15,6 +16,7 @@ const Button = ({
   className,
   onClick,
   type = "button",
+  disabled,
 }: Props): JSX.Element => {
   return (
     <button
@@ -22,6 +24,7 @@ const Button = ({
       onClick={onClick}
       style={{ width }}
       type={type}
+      disabled={disabled}
     >
       {children}
     </button>
