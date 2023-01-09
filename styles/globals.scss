@@ -29,6 +29,10 @@ button {
   height: 5px !important;
 }
 
+#nprogress .peg {
+  box-shadow: none !important;
+}
+
 #nprogress .spinner {
   display: none !important;
 }

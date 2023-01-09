@@ -6,14 +6,11 @@ import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
 
 interface Props {
-  onRefetchInteriors?: () => void;
   onSubmitAddDoor: (arg: FormData) => void;
+  isLoadingAdd: boolean;
 }
 
-const AddCardForm = ({
-  onRefetchInteriors,
-  onSubmitAddDoor,
-}: Props): JSX.Element => {
+const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
   const [isLoadingImage, setLoadingImage] = useState<boolean>(false);
   const [base64, setBase64] = useState<string>("");
 
@@ -22,8 +19,6 @@ const AddCardForm = ({
   const [isFailedLoadSize, setFailedLoadSize] = useState<boolean>(false);
   const [isFailedLoadSmall, setFailedLoadSMall] = useState<boolean>(false);
   const [isFailedLoadType, setFailedLoadType] = useState<boolean>(false);
-
-  const [isLoadingAdd, setLoadingAdd] = useState<boolean>(false);
 
   const {
     register,
@@ -48,10 +43,7 @@ const AddCardForm = ({
     formData.append("price", price);
     formData.append("characteristics", characteristics);
 
-    setLoadingAdd(true);
-
     onSubmitAddDoor(formData);
-    setLoadingAdd(false);
   };
 
   const [dragActive, setDragActive] = useState<boolean>(false);
@@ -279,6 +271,7 @@ const AddCardForm = ({
               id={styles["label-file-upload"]}
               htmlFor="input-file-upload"
               className={dragActive ? "drag-active" : ""}
+              onClick={onButtonClick}
             >
               <div
                 className={clsx(styles.block, {
@@ -286,18 +279,21 @@ const AddCardForm = ({
                 })}
               >
                 <p className={styles["drag-drop-text"]}>
-                  {dragActive
-                    ? "Отпустите изображение"
-                    : "Перетащите изображение сюда"}
+                  {dragActive ? (
+                    "Отпустите изображение"
+                  ) : (
+                    <>
+                      <>Перетащите изображение сюда</>
+                      <br />
+                      <br />
+                      или
+                      <br />
+                      <br />
+                      <>нажмите на этот блок для загрузки изображения</>
+                    </>
+                  )}
                 </p>
 
-                <button
-                  className={styles["upload-button"]}
-                  onClick={onButtonClick}
-                  type="button"
-                >
-                  Загрузить
-                </button>
                 {errors.image && (
                   <span className={styles.error}>
                     Добавление изображения обязательно!
@@ -330,7 +326,7 @@ const AddCardForm = ({
         {base64 && (
           <>
             {isLoadingAdd ? (
-              <LoadingSpinner />
+              <LoadingSpinner style={{ height: "100px" }} />
             ) : (
               <Button className={styles.button} width={"100%"} type="submit">
                 Сохранить

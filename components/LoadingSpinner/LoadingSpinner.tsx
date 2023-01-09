@@ -1,8 +1,12 @@
 import styles from "./styles.module.scss";
 
-const LoadingSpinner = () => {
+interface Props {
+  style?: React.CSSProperties;
+}
+
+const LoadingSpinner = ({ style }: Props): JSX.Element => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={style}>
       <svg
         className={styles.spinner}
         width="50px"

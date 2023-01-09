@@ -1,10 +1,11 @@
 import AddCardForm from "components/AddCardForm/AddCardForm";
 import Card from "components/Card/Card";
 import Modal from "components/Modal/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NProgress from "nprogress";
 
 import styles from "styles/pages/interior.module.scss";
+import Link from "next/link";
 
 interface Interior {
   characteristics: "[object Object]";
@@ -21,8 +22,11 @@ interface Props {
 export const Interior = ({ interiors }: Props): JSX.Element => {
   const [data, setData] = useState<Array<Interior>>(interiors);
 
+  const [isLoadingAdd, setLoadingAdd] = useState<boolean>(false);
+
   const onSubmitAddDoor = async (formData: FormData) => {
     NProgress.start();
+    setLoadingAdd(true);
 
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}interior/file`,
@@ -38,6 +42,7 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
       window.location.hash = "";
       setData(newData);
       NProgress.done();
+      setLoadingAdd(false);
     }
   };
 
@@ -54,17 +59,28 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
         title="Добавление межкомнатной двери"
         height={"70vh"}
       >
-        <AddCardForm onSubmitAddDoor={onSubmitAddDoor} />
+        <AddCardForm
+          onSubmitAddDoor={onSubmitAddDoor}
+          isLoadingAdd={isLoadingAdd}
+        />
       </Modal>
       <div className={styles.wrapper}>
         {data &&
           data.map((item) => (
-            <Card
-              title={item.name}
-              price={item.price}
-              srcImage={`${process.env.NEXT_PUBLIC_API_URL}${item.picturePath}`}
-            />
+            <Link href={`interior/${item.id}`}>
+              <Card
+                title={item.name}
+                price={item.price}
+                srcImage={`${process.env.NEXT_PUBLIC_API_URL}${item.picturePath}`}
+              />
+            </Link>
           ))}
+
+        {data && data.length === 0 && (
+          <div className={styles.default_wrapper}>
+            <div className={styles.default}>Пока здесь нет дверей 😨</div>
+          </div>
+        )}
       </div>
     </>
   );
