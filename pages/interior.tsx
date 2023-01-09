@@ -6,34 +6,38 @@ import NProgress from "nprogress";
 
 import styles from "styles/pages/interior.module.scss";
 
-export const Interior = ({ interiors }: any) => {
-  const [data, setData] = useState<any>(interiors);
+interface Interior {
+  characteristics: "[object Object]";
+  id: number;
+  name: string;
+  picturePath: string;
+  price: 1200;
+}
 
-  const onRefetchInteriors = async () => {
-    NProgress.set(0.4);
-    const resp = await fetch(`http://localhost:8000/interior`).then((data) =>
-      data.json()
-    );
+interface Props {
+  interiors: Array<Interior>;
+}
 
-    NProgress.done();
+export const Interior = ({ interiors }: Props): JSX.Element => {
+  const [data, setData] = useState<Array<Interior>>(interiors);
 
-    setData(resp);
-  };
-
-  const onSubmitAddDoor = async (formData: any) => {
+  const onSubmitAddDoor = async (formData: FormData) => {
     NProgress.start();
-    try {
-      let resp = await fetch("http://localhost:8000/interior/file", {
+
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}interior/file`,
+      {
         method: "POST",
         body: formData,
-      });
-
-      if (resp.status >= 200 && resp) {
-        window.location.hash = "";
-        setTimeout(() => onRefetchInteriors(), 500);
       }
-    } catch (error) {
-      console.log(error);
+    );
+
+    const newData = await resp.json();
+
+    if (resp.status >= 200) {
+      window.location.hash = "";
+      setData(newData);
+      NProgress.done();
     }
   };
 
@@ -50,18 +54,15 @@ export const Interior = ({ interiors }: any) => {
         title="Добавление межкомнатной двери"
         height={"70vh"}
       >
-        <AddCardForm
-          onRefetchInteriors={onRefetchInteriors}
-          onSubmitAddDoor={onSubmitAddDoor}
-        />
+        <AddCardForm onSubmitAddDoor={onSubmitAddDoor} />
       </Modal>
       <div className={styles.wrapper}>
         {data &&
-          data.map((item: any) => (
+          data.map((item) => (
             <Card
               title={item.name}
               price={item.price}
-              srcImage={`http://localhost:8000/${item.picturePath}`}
+              srcImage={`${process.env.NEXT_PUBLIC_API_URL}${item.picturePath}`}
             />
           ))}
       </div>
@@ -70,12 +71,12 @@ export const Interior = ({ interiors }: any) => {
 };
 
 export async function getServerSideProps() {
-  const resp = await fetch(`http://localhost:8000/interior`).then((data) =>
-    data.json()
-  );
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}interior`);
+
+  const data = await resp.json();
 
   return {
-    props: { interiors: resp },
+    props: { interiors: data },
   };
 }
 

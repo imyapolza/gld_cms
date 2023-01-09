@@ -1,15 +1,13 @@
 import clsx from "clsx";
 import Button from "components/Button/Button";
-import LoadingDots from "components/LoadingDots/LoadingDots";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useRef, useState } from "react";
+import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import styles from "./styles.module.scss";
 
 interface Props {
   onRefetchInteriors?: () => void;
-  onSubmitAddDoor: (arg: any) => void;
+  onSubmitAddDoor: (arg: FormData) => void;
 }
 
 const AddCardForm = ({
@@ -39,7 +37,7 @@ const AddCardForm = ({
     name: "characteristics",
   });
 
-  const onSubmit = async ({ name, price, characteristics }: any) => {
+  const onSubmit = async ({ name, price, characteristics }: FieldValues) => {
     let formData = new FormData();
 
     if (blob) {

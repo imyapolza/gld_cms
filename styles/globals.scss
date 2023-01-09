@@ -23,3 +23,12 @@ button {
   background: 0;
   padding: 0;
 }
+
+#nprogress .bar {
+  background: #ffe4c4 !important;
+  height: 5px !important;
+}
+
+#nprogress .spinner {
+  display: none !important;
+}
