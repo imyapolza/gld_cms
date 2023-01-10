@@ -4,3 +4,11 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+interface Interior {
+  characteristics: "[object Object]";
+  id: number;
+  name: string;
+  picturePath: string;
+  price: 1200;
+}

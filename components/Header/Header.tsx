@@ -1,5 +1,3 @@
-import Image from "next/image";
-import phoneSrc from "public/phone.png";
 import { menu, phone, routerPaths, title } from "constants/Header";
 import styles from "./styles.module.scss";
 import DoorLogo from "components/DoorLogo/DoorLogo";
