@@ -4,9 +4,10 @@ import toast from "react-hot-toast";
 
 interface Props<T> {
   items: Array<T>;
+  page: string;
 }
 
-const useSubmiteAddDoor = <T>({ items }: Props<T>) => {
+const useSubmiteAddDoor = <T>({ items, page }: Props<T>) => {
   const [data, setData] = useState<Array<T>>(items);
   const [isLoadingAdd, setLoadingAdd] = useState<boolean>(false);
 
@@ -16,7 +17,7 @@ const useSubmiteAddDoor = <T>({ items }: Props<T>) => {
       setLoadingAdd(true);
 
       const resp = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}interior/file`,
+        `${process.env.NEXT_PUBLIC_API_URL}${page}/file`,
         {
           method: "POST",
           body: formData,
