@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import styles from "styles/pages/entrance.module.scss";
 
 interface Props {
-  entrance: any;
+  entrance: Array<Item>;
 }
 
 const Entrance = ({ entrance }: Props): JSX.Element => {

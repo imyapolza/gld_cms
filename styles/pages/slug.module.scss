@@ -12,22 +12,8 @@
   font-weight: 300 !important;
 }
 
-.item {
-  display: flex;
-  margin-bottom: 20px;
-  font-size: 14px;
-
-  &_title {
-    font-weight: bold;
-  }
-}
-
 .w-200 {
   width: 200px;
-}
-
-.price_title {
-  letter-spacing: 0.2em;
 }
 
 .delete {

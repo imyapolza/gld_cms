@@ -10,5 +10,10 @@ interface Item {
   id: number;
   name: string;
   picturePath: string;
-  price: 1200;
+  price: number;
+}
+
+interface Characteristic {
+  name: string;
+  value: string;
 }

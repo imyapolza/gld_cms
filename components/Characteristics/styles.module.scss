@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 14px;
+
+  &_title {
+    font-weight: bold;
+  }
+}
+
+.price_title {
+  letter-spacing: 0.2em;
+}
+
+.w-200 {
+  width: 200px;
+}

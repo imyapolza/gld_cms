@@ -1,26 +1,16 @@
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
-import styles from "styles/pages/interior/index.module.scss";
-import clsx from "clsx";
-
-interface IInterior {
-  id: number;
-  name: string;
-  price: number;
-  characteristics: string;
-  picturePath: string;
-}
+import styles from "styles/pages/slug.module.scss";
+import Characteristics from "components/Characteristics/Characteristics";
 
 interface Props {
-  interior: IInterior;
+  interior: Item;
 }
 
 const InteriorSlug = ({ interior }: Props): JSX.Element => {
-  const characteristics: Array<{ name: string; value: string }> = JSON.parse(
+  const characteristics: Array<Characteristic> = JSON.parse(
     interior.characteristics
   );
-
-  const isFirst = (index: number) => index === 0;
 
   return (
     <div className={styles.wrapper}>
@@ -32,36 +22,10 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
           width={340}
           height={450}
         />
-
-        <ul>
-          {characteristics &&
-            characteristics.map(({ name, value }, index) => (
-              <>
-                <li
-                  className={styles.item}
-                  style={
-                    isFirst(index)
-                      ? { marginBottom: "30px", fontSize: "2em" }
-                      : {}
-                  }
-                >
-                  {index > 0 && (
-                    <div
-                      className={clsx(
-                        styles.item_title,
-                        index > 0 ? styles["w-200"] : styles.price_title
-                      )}
-                    >
-                      {isFirst(index) ? "" : name}:
-                    </div>
-                  )}
-                  <div className={styles.item_value}>
-                    {isFirst(index) ? interior.price + " " + "руб." : value}
-                  </div>
-                </li>
-              </>
-            ))}
-        </ul>
+        <Characteristics<Array<Characteristic>>
+          characteristics={characteristics}
+          item={interior}
+        />
       </div>
     </div>
   );
