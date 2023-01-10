@@ -57,6 +57,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
     if (!types.includes(file.type)) {
       setFailedLoadType(true);
+      setDragActive(false);
     } else {
       setFailedLoadSize(false);
       setFailedLoadSMall(false);
@@ -64,6 +65,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
       if (Number((file.size / (1024 * 1024)).toFixed(2)) >= 1) {
         setFailedLoadSize(true);
+        setDragActive(false);
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -79,6 +81,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             const width = image.width;
             if (width < 750 || height < 1000) {
               setFailedLoadSMall(true);
+              setDragActive(false);
             } else {
               if (typeof reader.result === "string") {
                 setBase64(reader.result);
