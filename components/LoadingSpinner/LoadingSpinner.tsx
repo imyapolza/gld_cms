@@ -1,12 +1,14 @@
+import clsx from "clsx";
 import styles from "./styles.module.scss";
 
 interface Props {
   style?: React.CSSProperties;
+  className?: string;
 }
 
-const LoadingSpinner = ({ style }: Props): JSX.Element => {
+const LoadingSpinner = ({ style, className }: Props): JSX.Element => {
   return (
-    <div className={styles.wrapper} style={style}>
+    <div className={clsx(styles.wrapper, className)} style={style}>
       <svg
         className={styles.spinner}
         width="50px"

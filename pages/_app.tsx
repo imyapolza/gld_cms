@@ -9,6 +9,7 @@ import "styles/globals.scss";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { Toaster } from "react-hot-toast";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <main className={raleway.className}>
+      <Toaster position="bottom-right" />
       <Layout>
         <Component {...pageProps} />
       </Layout>
