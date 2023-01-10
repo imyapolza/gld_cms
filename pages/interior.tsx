@@ -1,31 +1,25 @@
 import AddCardForm from "components/AddCardForm/AddCardForm";
-import Card from "components/Card/Card";
 import Modal from "components/Modal/Modal";
-import { useEffect, useState } from "react";
-import NProgress from "nprogress";
-
-import styles from "styles/pages/interior.module.scss";
-import Link from "next/link";
-import Button from "components/Button/Button";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import AddCardButton from "components/AddCardButton/AddCardButton";
-import NoDataText from "components/NoDataText/NoDataText";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import DataMapping from "components/DataMapping/DataMapping";
 
+import styles from "styles/pages/interior.module.scss";
+
 interface Props {
-  interiors: Array<Interior>;
+  interiors: Array<Item>;
 }
 
 export const Interior = ({ interiors }: Props): JSX.Element => {
   const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
-
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const { onSubmitAddDoor, setData, data, isLoadingAdd } =
-    useSubmiteAddDoor<Interior>({
+    useSubmiteAddDoor<Item>({
       items: interiors,
+      page: "interior",
     });
 
   const onDelete = async (id: number) => {
@@ -70,7 +64,7 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
       </Modal>
 
       <div className={styles.wrapper}>
-        <DataMapping<Array<Interior>>
+        <DataMapping<Array<Item>>
           data={data}
           isLoadingDelete={isLoadingDelete}
           deleteId={deleteId}

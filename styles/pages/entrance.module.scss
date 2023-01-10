@@ -1,4 +1,19 @@
+.wrapper {
+  width: 70em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .modal {
   position: relative;
   height: 80vh !important;
+}
+
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

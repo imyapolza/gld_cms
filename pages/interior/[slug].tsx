@@ -1,8 +1,6 @@
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "styles/pages/interior/index.module.scss";
-import { useEffect } from "react";
 import clsx from "clsx";
 
 interface IInterior {
@@ -18,8 +16,6 @@ interface Props {
 }
 
 const InteriorSlug = ({ interior }: Props): JSX.Element => {
-  const router = useRouter();
-
   const characteristics: Array<{ name: string; value: string }> = JSON.parse(
     interior.characteristics
   );
@@ -73,7 +69,9 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const id = ctx.query.slug;
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}interior/${id}`);
+  const resp = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}${ctx.resolvedUrl.split("/")[1]}/${id}`
+  );
 
   const data = await resp.json();
 

@@ -5,7 +5,7 @@ declare module "*.svg" {
   export default src;
 }
 
-interface Interior {
+interface Item {
   characteristics: "[object Object]";
   id: number;
   name: string;
