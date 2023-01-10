@@ -2,6 +2,8 @@ import Card from "components/Card/Card";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import NoDataText from "components/NoDataText/NoDataText";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import styles from "./styles.module.scss";
 
 interface Props<T> {
@@ -17,6 +19,8 @@ const DataMapping = <T,>({
   deleteId,
   onDelete,
 }: Props<T>): JSX.Element => {
+  const router = useRouter();
+
   return (
     <>
       {data &&
@@ -41,7 +45,7 @@ const DataMapping = <T,>({
               </>
             )}
 
-            <Link href={`interior/${item.id}`}>
+            <Link href={`${router.asPath.split("/")[1]}/${item.id}`}>
               <Card
                 title={item.name}
                 price={item.price}
