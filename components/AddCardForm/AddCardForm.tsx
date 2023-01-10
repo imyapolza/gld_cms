@@ -41,7 +41,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
     formData.append("name", name);
     formData.append("price", price);
-    formData.append("characteristics", characteristics);
+    formData.append("characteristics", JSON.stringify(characteristics));
 
     onSubmitAddDoor(formData);
   };
@@ -192,20 +192,25 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
                 <div className={styles.characteristics} key={field.id}>
                   <input
                     key={field.id}
-                    {...register(`characteristics.${index}.name`)}
+                    {...register(`characteristics.${index}.name`, {
+                      required: true,
+                    })}
                     className={styles.name_input}
                     type="text"
                     minLength={3}
                     maxLength={100}
                     placeholder={`Заголовок ${index + 1}...`}
                   />
+
                   <input
+                    {...register(`characteristics.${index}.value`, {
+                      required: true,
+                    })}
                     key={
                       field.id +
                       Date.now().toString(36) +
                       Math.random().toString(36).substring(2)
                     }
-                    {...register(`characteristics.${index}.value`)}
                     className={styles.name_input}
                     type="text"
                     minLength={3}
@@ -216,6 +221,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
                 <button
                   className={styles.characteristics_delete}
                   onClick={() => onDeleteCharacteristic(index)}
+                  type="button"
                 >
                   Удалить характеристику
                 </button>
@@ -224,9 +230,9 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
           })}
         </label>
 
-        <div>
+        {fields.length < 11 && (
           <Button onClick={onAddCharacteristic}>Добавить характеристику</Button>
-        </div>
+        )}
 
         <label className={styles.label}>Фото двери:</label>
 

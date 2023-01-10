@@ -58,3 +58,20 @@
   text-transform: uppercase;
   color: black;
 }
+
+.interior {
+  &_block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.delete {
+  cursor: pointer;
+  color: red;
+  position: absolute;
+  top: 65px;
+  left: 115px;
+}

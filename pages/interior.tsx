@@ -6,6 +6,7 @@ import NProgress from "nprogress";
 
 import styles from "styles/pages/interior.module.scss";
 import Link from "next/link";
+import Button from "components/Button/Button";
 
 interface Interior {
   characteristics: "[object Object]";
@@ -23,6 +24,7 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
   const [data, setData] = useState<Array<Interior>>(interiors);
 
   const [isLoadingAdd, setLoadingAdd] = useState<boolean>(false);
+  const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
 
   const onSubmitAddDoor = async (formData: FormData) => {
     NProgress.start();
@@ -43,6 +45,26 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
       setData(newData);
       NProgress.done();
       setLoadingAdd(false);
+    }
+  };
+
+  const onDelete = async (id: number) => {
+    NProgress.start();
+    setLoadingDelete(true);
+
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}interior/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const newData = await resp.json();
+
+    if (resp.status >= 200) {
+      setData(newData);
+      NProgress.done();
+      setLoadingDelete(false);
     }
   };
 
@@ -67,13 +89,25 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
       <div className={styles.wrapper}>
         {data &&
           data.map((item) => (
-            <Link href={`interior/${item.id}`}>
-              <Card
-                title={item.name}
-                price={item.price}
-                srcImage={`${process.env.NEXT_PUBLIC_API_URL}${item.picturePath}`}
-              />
-            </Link>
+            <div className={styles.interior_block}>
+              {!isLoadingDelete && (
+                <button
+                  className={styles.delete}
+                  onClick={() => onDelete(item.id)}
+                  disabled={isLoadingDelete}
+                >
+                  Удалить
+                </button>
+              )}
+
+              <Link href={`interior/${item.id}`}>
+                <Card
+                  title={item.name}
+                  price={item.price}
+                  srcImage={`${process.env.NEXT_PUBLIC_API_URL}${item.picturePath}`}
+                />
+              </Link>
+            </div>
           ))}
 
         {data && data.length === 0 && (

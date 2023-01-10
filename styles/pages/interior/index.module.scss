@@ -1,0 +1,35 @@
+.wrapper {
+  margin-top: 50px;
+}
+
+.main {
+  display: flex;
+  margin-top: 40px;
+}
+
+.name {
+  margin-left: 65px;
+  font-weight: 300 !important;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 14px;
+
+  &_title {
+    font-weight: bold;
+  }
+}
+
+.w-200 {
+  width: 200px;
+}
+
+.price_title {
+  letter-spacing: 0.2em;
+}
+
+.delete {
+  position: absolute;
+}
