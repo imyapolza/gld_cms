@@ -3,7 +3,6 @@ import styles from "./styles.module.scss";
 import DoorLogo from "components/DoorLogo/DoorLogo";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import ChangeTextArea from "components/ChangeTextarea/ChangeTextArea";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -44,17 +43,7 @@ const Header = (): JSX.Element => {
         ))}
       </ul>
 
-      <ChangeTextArea
-        isChange={isChangePhone}
-        text={phone}
-        stylesForm={styles.form}
-        stylesDefault={styles.h2}
-        handleChange={handleChangePhone}
-        defaultType={"a"}
-        onCancelChanges={onCancelChangesPhone}
-        textAreaWidth={"inherit"}
-        buttonClass={styles.button}
-      />
+      <a className={styles.h2}>{phone}</a>
 
       {/* <button className={styles.cart}>
         <Image src={cartSrc} alt="cart" />

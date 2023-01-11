@@ -1,6 +1,8 @@
 import Characteristics from "components/Characteristics/Characteristics";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
+import { useState } from "react";
+import onSubmitName from "requests/onSlugPatch";
 import styles from "styles/pages/slug.module.scss";
 
 interface Props {
@@ -8,13 +10,36 @@ interface Props {
 }
 
 const EntranceSlug = ({ entrance }: Props): JSX.Element => {
+  const [isChangeName, setChangeName] = useState<boolean>(false);
+  const [isLoadingChange, setLoadingChange] = useState<boolean>(false);
+  const [name, setName] = useState<string>(entrance.name);
+
   const characteristics: Array<Characteristic> = JSON.parse(
     entrance.characteristics
   );
 
+  const onChangeName = () => {
+    setChangeName(true);
+  };
+
+  const onCancelChangeName = () => {
+    setChangeName(false);
+  };
+
+  const onSubmit = ({ changeText }: { changeText: string }) => {
+    onSubmitName({
+      changeText,
+      setLoadingChange,
+      onCancelChangeName,
+      setName,
+      id: entrance.id,
+      page: "entrance",
+    });
+  };
+
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.name}>{entrance.name}</h1>
+      <h1 className={styles.name}>{name}</h1>
       <div className={styles.main}>
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}
