@@ -192,7 +192,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
           {fields.map((field, index) => {
             return (
               <>
-                <div className={styles.characteristics} key={field.id}>
+                <div className={styles.characteristics} key={index}>
                   <input
                     key={field.id}
                     {...register(`characteristics.${index}.name`, {

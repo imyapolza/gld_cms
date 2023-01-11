@@ -19,9 +19,9 @@ const Characteristics = <T,>({
   const isFirst = (index: number) => index === 0;
   const router = useRouter();
 
-  const onChangePrice = async (e: any) => {
+  const onChangePrice = async (e: React.FocusEvent<HTMLElement>) => {
     try {
-      if (e.target.value.trim()) {
+      if ((e.target as HTMLInputElement).value.trim()) {
         const resp = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}${
             router.asPath.split("/")[1]
@@ -31,7 +31,7 @@ const Characteristics = <T,>({
               "Content-Type": "application/json",
             },
             method: "PATCH",
-            body: JSON.stringify({ price: e.target.value }),
+            body: JSON.stringify({ price: (e.target as HTMLInputElement).value }),
           }
         );
 
@@ -61,46 +61,45 @@ const Characteristics = <T,>({
       {characteristics &&
         Array.isArray(characteristics) &&
         characteristics.map(({ name, value }, index) => (
-          <>
-            <li
-              className={styles.item}
-              style={
-                isFirst(index) ? { marginBottom: "30px", fontSize: "2em" } : {}
-              }
-            >
-              <div
-                className={clsx(
-                  styles.item_title,
-                  index > 0 ? styles["w-200"] : styles.price_title
-                )}
-              >
-                {isFirst(index) ? "" : name}
-              </div>
-              {isChangePrice && index === 0 ? (
-                <>
-                  <input
-                    autoFocus
-                    className={styles.input}
-                    type="text"
-                    defaultValue={newPrice ? newPrice : item.price}
-                    onBlur={onChangePrice}
-                  />
-                </>
-              ) : (
-                <div onClick={onActivePrice}>
-                  {isFirst(index) ? (
-                    <>
-                      {newPrice
-                        ? newPrice + " " + "руб."
-                        : item.price + " " + "руб."}
-                    </>
-                  ) : (
-                    value
-                  )}
-                </div>
+          <li
+            key={index}
+            className={styles.item}
+            style={
+              isFirst(index) ? { marginBottom: "30px", fontSize: "2em" } : {}
+            }
+          >
+            <div
+              className={clsx(
+                styles.item_title,
+                index > 0 ? styles["w-200"] : styles.price_title
               )}
-            </li>
-          </>
+            >
+              {isFirst(index) ? "" : name}
+            </div>
+            {isChangePrice && index === 0 ? (
+              <>
+                <input
+                  autoFocus
+                  className={styles.input}
+                  type="text"
+                  defaultValue={newPrice ? newPrice : item.price}
+                  onBlur={onChangePrice}
+                />
+              </>
+            ) : (
+              <div onClick={onActivePrice}>
+                {isFirst(index) ? (
+                  <>
+                    {newPrice
+                      ? newPrice + " " + "руб."
+                      : item.price + " " + "руб."}
+                  </>
+                ) : (
+                  value
+                )}
+              </div>
+            )}
+          </li>
         ))}
     </ul>
   );

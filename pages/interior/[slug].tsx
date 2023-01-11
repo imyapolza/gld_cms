@@ -4,6 +4,7 @@ import styles from "styles/pages/slug.module.scss";
 import Characteristics from "components/Characteristics/Characteristics";
 import { useState } from "react";
 import onSubmitName from "requests/onSlugPatch";
+import clsx from "clsx";
 
 interface Props {
   interior: Item;
@@ -12,7 +13,7 @@ interface Props {
 const InteriorSlug = ({ interior }: Props): JSX.Element => {
   const [isChangeName, setChangeName] = useState<boolean>(false);
   const [isLoadingChange, setLoadingChange] = useState<boolean>(false);
-  const [name, setName] = useState<string>(interior.name);
+  const [name, setName] = useState<string | null>(null);
 
   const characteristics: Array<Characteristic> = JSON.parse(
     interior.characteristics
@@ -37,11 +38,25 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
     });
   };
 
+  const onBlurInput = (e: React.FocusEvent<HTMLElement>) => {
+    onSubmit({ changeText: (e.target as HTMLInputElement).value });
+  };
+
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.name} onClick={onChangeName}>
-        {name}
-      </h1>
+      {isChangeName ? (
+        <input
+          className={clsx(styles.name, styles.input)}
+          type="text"
+          autoFocus
+          defaultValue={name ? name : interior.name}
+          onBlur={onBlurInput}
+        />
+      ) : (
+        <h1 className={styles.name} onClick={onChangeName}>
+          {name ? name : interior.name}
+        </h1>
+      )}
       <div className={styles.main}>
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${interior.picturePath}`}

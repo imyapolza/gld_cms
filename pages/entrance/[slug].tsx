@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Characteristics from "components/Characteristics/Characteristics";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
@@ -37,9 +38,25 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
     });
   };
 
+  const onBlurInput = (e: React.FocusEvent<HTMLElement>) => {
+    onSubmit({ changeText: (e.target as HTMLInputElement).value });
+  };
+
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.name}>{name}</h1>
+      {isChangeName ? (
+        <input
+          className={clsx(styles.name, styles.input)}
+          type="text"
+          autoFocus
+          defaultValue={name ? name : entrance.name}
+          onBlur={onBlurInput}
+        />
+      ) : (
+        <h1 className={styles.name} onClick={onChangeName}>
+          {name ? name : entrance.name}
+        </h1>
+      )}
       <div className={styles.main}>
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}

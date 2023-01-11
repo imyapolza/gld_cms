@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import DoorLogo from "components/DoorLogo/DoorLogo";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const Header = (): JSX.Element => {
@@ -32,8 +32,11 @@ const Header = (): JSX.Element => {
             <Link
               className={clsx(styles.list_link, {
                 [styles.list_active]:
-                  routerPaths[index as keyof typeof routerPaths] ===
-                  router.asPath,
+                  (router.asPath.includes(
+                    routerPaths[index as keyof typeof routerPaths]
+                  ) &&
+                    index > 0) ||
+                  (router.asPath === "/" && index === 0),
               })}
               href={routerPaths[index as keyof typeof routerPaths]}
             >

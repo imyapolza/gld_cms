@@ -3,9 +3,9 @@ import NProgress from "nprogress";
 
 interface Arguments {
   changeText: string;
-  setLoadingChange: any;
-  onCancelChangeName: any;
-  setName: any;
+  setLoadingChange: (arg: boolean) => void;
+  onCancelChangeName: () => void;
+  setName: (name: string) => void;
   page: string;
   id: number;
 }
@@ -36,14 +36,15 @@ const onSubmitName = async ({
 
     if (resp.status >= 200) {
       onCancelChangeName();
-      setName(newName);
+      setName(newName.name);
       setLoadingChange(false);
       NProgress.done();
+      toast.success("Название изменено");
     }
   } catch (error) {
     console.log(error);
     setLoadingChange(false);
-    toast.error("Не удалось изменить");
+    toast.error("Не удалось изменить название");
     NProgress.done();
   }
 };
