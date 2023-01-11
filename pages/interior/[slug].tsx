@@ -39,7 +39,9 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.name}>{name}</h1>
+      <h1 className={styles.name} onClick={onChangeName}>
+        {name}
+      </h1>
       <div className={styles.main}>
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${interior.picturePath}`}

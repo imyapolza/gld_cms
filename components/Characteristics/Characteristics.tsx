@@ -21,29 +21,34 @@ const Characteristics = <T,>({
 
   const onChangePrice = async (e: any) => {
     try {
-      const resp = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${
-          router.asPath.split("/")[1]
-        }/price/${item.id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "PATCH",
-          body: JSON.stringify({ price: e.target.value }),
+      if (e.target.value.trim()) {
+        const resp = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}${
+            router.asPath.split("/")[1]
+          }/price/${item.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "PATCH",
+            body: JSON.stringify({ price: e.target.value }),
+          }
+        );
+
+        const newData = await resp.json();
+
+        if (resp.status >= 200) {
+          setNewPrice(newData);
+          toast.success("Цена изменена");
+          setChangePrice(false);
         }
-      );
-
-      const newData = await resp.json();
-
-      if (resp.status >= 200) {
-        setNewPrice(newData);
-        toast.success("Цена изменена");
+      } else {
         setChangePrice(false);
       }
     } catch (error) {
       console.log(error);
       toast.error("Не удалось изменить цену");
+      setChangePrice(false);
     }
   };
 
