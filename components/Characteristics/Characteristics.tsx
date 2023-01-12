@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import onChangePrice from "requests/patch/onChangePrice";
 import styles from "./styles.module.scss";
 
 interface Props<T> {
@@ -16,41 +16,9 @@ const Characteristics = <T,>({
   const [isChangePrice, setChangePrice] = useState<boolean>(false);
   const [newPrice, setNewPrice] = useState<string | null>(null);
 
-  const isFirst = (index: number) => index === 0;
   const router = useRouter();
 
-  const onChangePrice = async (e: React.FocusEvent<HTMLElement>) => {
-    try {
-      if ((e.target as HTMLInputElement).value.trim()) {
-        const resp = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}${
-            router.asPath.split("/")[1]
-          }/price/${item.id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            method: "PATCH",
-            body: JSON.stringify({ price: (e.target as HTMLInputElement).value }),
-          }
-        );
-
-        const newData = await resp.json();
-
-        if (resp.status >= 200) {
-          setNewPrice(newData);
-          toast.success("Цена изменена");
-          setChangePrice(false);
-        }
-      } else {
-        setChangePrice(false);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Не удалось изменить цену");
-      setChangePrice(false);
-    }
-  };
+  const isFirst = (index: number) => index === 0;
 
   const onActivePrice = () => {
     setChangePrice(true);
@@ -83,7 +51,15 @@ const Characteristics = <T,>({
                   className={styles.input}
                   type="text"
                   defaultValue={newPrice ? newPrice : item.price}
-                  onBlur={onChangePrice}
+                  onBlur={(e) =>
+                    onChangePrice({
+                      e,
+                      item,
+                      setNewPrice,
+                      setChangePrice,
+                      page: router.asPath.split("/")[1],
+                    })
+                  }
                 />
               </>
             ) : (

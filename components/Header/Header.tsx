@@ -1,23 +1,40 @@
-import { menu, phone, routerPaths, title } from "constants/Header";
+import { menu, routerPaths, title } from "constants/Header";
 import styles from "./styles.module.scss";
 import DoorLogo from "components/DoorLogo/DoorLogo";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import cartSrc from "public/phone.png";
+import Image from "next/image";
+import { onPhoneMask } from "utils/phoneMask";
+import onChangePhone from "requests/patch/onChangePhone";
 
-const Header = (): JSX.Element => {
+interface Props {
+  home: Home;
+}
+
+const Header = ({ home }: Props): JSX.Element => {
   const router = useRouter();
 
   const [isChangePhone, setChangePhone] = useState<boolean>(false);
+  const [phone, setPhone] = useState<string | null>(null);
 
-  const handleChangePhone = () => {
+  const [phoneWithServer, setPhoneServer] = useState<string | null>(null);
+
+  const onChangeNumber = () => {
     setChangePhone(true);
   };
 
-  const onCancelChangesPhone = () => {
-    setChangePhone(false);
-  };
+  const input: RefObject<HTMLInputElement> = useRef(null);
+
+  useEffect(() => {
+    const number = JSON.parse(window.localStorage.getItem("number") || "{}");
+
+    if (number) {
+      setPhoneServer(String(number));
+    }
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -46,11 +63,28 @@ const Header = (): JSX.Element => {
         ))}
       </ul>
 
-      <a className={styles.h2}>{phone}</a>
-
-      {/* <button className={styles.cart}>
-        <Image src={cartSrc} alt="cart" />
-      </button> */}
+      <div className={styles.phone_wrapper}>
+        {isChangePhone ? (
+          <>
+            {phoneWithServer && (
+              <input
+                className={styles.input}
+                type="text"
+                onBlur={(e) => onChangePhone({ e, setChangePhone, setPhone })}
+                onInput={(e) => onPhoneMask({ e, input })}
+                ref={input}
+                defaultValue={phone ? phone : phoneWithServer}
+                autoFocus
+              />
+            )}
+          </>
+        ) : (
+          <a className={styles.phone} onClick={onChangeNumber}>
+            {phone ? phone : phoneWithServer}
+            <Image className={styles.phone_img} src={cartSrc} alt="cart" />
+          </a>
+        )}
+      </div>
     </div>
   );
 };

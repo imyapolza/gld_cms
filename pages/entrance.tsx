@@ -4,7 +4,7 @@ import DataMapping from "components/DataMapping/DataMapping";
 import Modal from "components/Modal/Modal";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/entrance.module.scss";
 
 interface Props {
@@ -20,32 +20,6 @@ const Entrance = ({ entrance }: Props): JSX.Element => {
       items: entrance,
       page: "entrance",
     });
-
-  const onDelete = async (id: number) => {
-    try {
-      setDeleteId(id);
-      setLoadingDelete(true);
-
-      const resp = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}entrance/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const newData = await resp.json();
-
-      if (resp.status >= 200) {
-        setData(newData);
-        setLoadingDelete(false);
-        toast.success("Удалено!");
-      }
-    } catch (error) {
-      toast.error(`Не удалось удалить`);
-      setLoadingDelete(false);
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -67,7 +41,15 @@ const Entrance = ({ entrance }: Props): JSX.Element => {
           data={data}
           isLoadingDelete={isLoadingDelete}
           deleteId={deleteId}
-          onDelete={onDelete}
+          onDelete={(id: number) =>
+            onDeleteDoor<Item>({
+              id,
+              setDeleteId,
+              setLoadingDelete,
+              setData,
+              page: "entrance",
+            })
+          }
         />
       </div>
     </>

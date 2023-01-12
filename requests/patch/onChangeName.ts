@@ -21,6 +21,7 @@ const onSubmitName = async ({
   try {
     setLoadingChange(true);
     NProgress.start();
+
     const resp = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${page}/${id}`,
       {

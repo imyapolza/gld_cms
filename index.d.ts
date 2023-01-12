@@ -6,7 +6,7 @@ declare module "*.svg" {
 }
 
 interface Item {
-  characteristics: "[object Object]";
+  characteristics: string;
   id: number;
   name: string;
   picturePath: string;
@@ -16,4 +16,9 @@ interface Item {
 interface Characteristic {
   name: string;
   value: string;
+}
+
+interface Home {
+  address: string;
+  number: number;
 }

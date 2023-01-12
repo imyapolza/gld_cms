@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "styles/pages/slug.module.scss";
 import Characteristics from "components/Characteristics/Characteristics";
 import { useState } from "react";
-import onSubmitName from "requests/onSlugPatch";
+import onSubmitName from "requests/patch/onChangeName";
 import clsx from "clsx";
 
 interface Props {
@@ -39,7 +39,13 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
   };
 
   const onBlurInput = (e: React.FocusEvent<HTMLElement>) => {
-    onSubmit({ changeText: (e.target as HTMLInputElement).value });
+    const target = (e.target as HTMLInputElement).value;
+
+    if (target.trim()) {
+      onSubmit({ changeText: target });
+    } else {
+      setChangeName(false);
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import Characteristics from "components/Characteristics/Characteristics";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { useState } from "react";
-import onSubmitName from "requests/onSlugPatch";
+import onSubmitName from "requests/patch/onChangeName";
 import styles from "styles/pages/slug.module.scss";
 
 interface Props {
