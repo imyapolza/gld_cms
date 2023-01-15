@@ -189,48 +189,46 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
         <label className={styles.label}>
           Характеристики:
-          {fields.map((field, index) => {
-            return (
-              <>
-                <div className={styles.characteristics} key={index}>
-                  <input
-                    key={field.id}
-                    {...register(`characteristics.${index}.name`, {
-                      required: true,
-                    })}
-                    className={styles.name_input}
-                    type="text"
-                    minLength={3}
-                    maxLength={100}
-                    placeholder={`Заголовок ${index + 1}...`}
-                  />
+          {fields.map((field, index) => (
+            <div key={index}>
+              <div className={styles.characteristics}>
+                <input
+                  key={field.id}
+                  {...register(`characteristics.${index}.name`, {
+                    required: true,
+                  })}
+                  className={styles.name_input}
+                  type="text"
+                  minLength={3}
+                  maxLength={100}
+                  placeholder={`Заголовок ${index + 1}...`}
+                />
 
-                  <input
-                    {...register(`characteristics.${index}.value`, {
-                      required: true,
-                    })}
-                    key={
-                      field.id +
-                      Date.now().toString(36) +
-                      Math.random().toString(36).substring(2)
-                    }
-                    className={styles.name_input}
-                    type="text"
-                    minLength={3}
-                    maxLength={100}
-                    placeholder={`Характеристика ${index + 1}...`}
-                  />
-                </div>
-                <button
-                  className={styles.characteristics_delete}
-                  onClick={() => onDeleteCharacteristic(index)}
-                  type="button"
-                >
-                  Удалить характеристику
-                </button>
-              </>
-            );
-          })}
+                <input
+                  {...register(`characteristics.${index}.value`, {
+                    required: true,
+                  })}
+                  key={
+                    field.id +
+                    Date.now().toString(36) +
+                    Math.random().toString(36).substring(2)
+                  }
+                  className={styles.name_input}
+                  type="text"
+                  minLength={3}
+                  maxLength={100}
+                  placeholder={`Характеристика ${index + 1}...`}
+                />
+              </div>
+              <button
+                className={styles.characteristics_delete}
+                onClick={() => onDeleteCharacteristic(index)}
+                type="button"
+              >
+                Удалить характеристику
+              </button>
+            </div>
+          ))}
         </label>
 
         {fields.length < 11 && (

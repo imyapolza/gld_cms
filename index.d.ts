@@ -22,3 +22,8 @@ interface Home {
   address: string;
   number: number;
 }
+
+interface ItemResp {
+  results: Array<Item>;
+  total: number;
+}

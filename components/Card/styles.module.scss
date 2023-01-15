@@ -9,12 +9,17 @@
   margin-bottom: 65px;
   margin-top: 100px;
   cursor: pointer;
+  padding-bottom: 10px;
 }
 
 .wrapper:hover {
   .arrow {
     transition: 0.3s;
     opacity: 1;
+  }
+
+  .title {
+    color: #6e9c9f;
   }
 }
 

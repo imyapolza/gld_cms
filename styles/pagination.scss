@@ -1,0 +1,46 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  margin-bottom: 50px;
+}
+
+.pagination :nth-child(1n):not(:last-child) {
+  margin-right: 50px;
+  color: #6e9c9f;
+}
+
+.pagination > li {
+  cursor: pointer;
+}
+
+.pagination > li {
+  border-radius: 50px;
+  font-size: 1.5em;
+}
+
+.active {
+  background: #6e9c9f;
+}
+
+.active > a {
+  color: white;
+}
+
+.page-item > a:hover {
+  color: #6e9c9f;
+  transition: 0.2s;
+}
+
+.active > a:hover {
+  color: white;
+  transition: 0.2s;
+}
+
+.page-link {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

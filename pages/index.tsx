@@ -20,24 +20,22 @@ function Home({ home }: Props): JSX.Element {
   }, []);
 
   return (
-    <>
-      <div className={styles.wrapper}>
-        <h2 className={styles.h2}>{h2}</h2>
-        {isChangeAddress ? (
-          <input
-            autoFocus
-            className={styles.input}
-            type="text"
-            defaultValue={isAddress ? isAddress : home.address}
-            onBlur={(e) => onChangeAddress({ e, setAddress, setChangeAddress })}
-          />
-        ) : (
-          <h3 className={styles.h3} onClick={onChange}>
-            {isAddress ? isAddress : home.address}
-          </h3>
-        )}
-      </div>
-    </>
+    <div className={styles.wrapper}>
+      <h2 className={styles.h2}>{h2}</h2>
+      {isChangeAddress ? (
+        <input
+          autoFocus
+          className={styles.input}
+          type="text"
+          defaultValue={isAddress ? isAddress : home.address}
+          onBlur={(e) => onChangeAddress({ e, setAddress, setChangeAddress })}
+        />
+      ) : (
+        <h3 className={styles.h3} onClick={onChange}>
+          {isAddress ? isAddress : home.address}
+        </h3>
+      )}
+    </div>
   );
 }
 

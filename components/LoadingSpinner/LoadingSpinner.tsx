@@ -19,8 +19,8 @@ const LoadingSpinner = ({ style, className }: Props): JSX.Element => {
         <circle
           className={styles.path}
           fill="none"
-          stroke-width="6"
-          stroke-linecap="round"
+          strokeWidth="6"
+          strokeLinecap="round"
           cx="33"
           cy="33"
           r="30"

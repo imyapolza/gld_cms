@@ -8,16 +8,17 @@ import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/entrance.module.scss";
 
 interface Props {
-  entrance: Array<Item>;
+  results: Array<Item>;
+  total: number;
 }
 
-const Entrance = ({ entrance }: Props): JSX.Element => {
+const Entrance = ({ results, total }: Props): JSX.Element => {
   const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const { onSubmitAddDoor, setData, data, isLoadingAdd } =
     useSubmiteAddDoor<Item>({
-      items: entrance,
+      items: results,
       page: "entrance",
     });
 
@@ -59,10 +60,10 @@ const Entrance = ({ entrance }: Props): JSX.Element => {
 export async function getServerSideProps() {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}entrance`);
 
-  const data = await resp.json();
+  const { results, total } = await resp.json();
 
   return {
-    props: { entrance: data },
+    props: { results, total },
   };
 }
 

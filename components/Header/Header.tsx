@@ -10,11 +10,7 @@ import Image from "next/image";
 import { onPhoneMask } from "utils/phoneMask";
 import onChangePhone from "requests/patch/onChangePhone";
 
-interface Props {
-  home: Home;
-}
-
-const Header = ({ home }: Props): JSX.Element => {
+const Header = (): JSX.Element => {
   const router = useRouter();
 
   const [isChangePhone, setChangePhone] = useState<boolean>(false);

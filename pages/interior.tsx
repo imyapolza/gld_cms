@@ -6,20 +6,37 @@ import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import DataMapping from "components/DataMapping/DataMapping";
 import styles from "styles/pages/interior.module.scss";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
+import ReactPaginate from "react-paginate";
+import onChangePage from "requests/get/onChangePage";
 
 interface Props {
-  interiors: Array<Item>;
+  results: Array<Item>;
+  total: number;
 }
 
-export const Interior = ({ interiors }: Props): JSX.Element => {
+export const Interior = ({ results, total }: Props): JSX.Element => {
   const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
+  const [items, setItems] = useState<Array<Item>>(results);
+
   const { onSubmitAddDoor, setData, data, isLoadingAdd } =
     useSubmiteAddDoor<Item>({
-      items: interiors,
+      items: results,
       page: "interior",
     });
+
+  const onPageChange = async (page: number) => {
+    const generatedOffset = page * 8;
+
+    const { results } = await onChangePage({
+      pageName: "interior",
+      offset: generatedOffset,
+      limit: 8,
+    });
+
+    setItems(results);
+  };
 
   return (
     <>
@@ -38,7 +55,7 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
 
       <div className={styles.wrapper}>
         <DataMapping<Array<Item>>
-          data={data}
+          data={items}
           isLoadingDelete={isLoadingDelete}
           deleteId={deleteId}
           onDelete={(id: number) =>
@@ -52,6 +69,26 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
           }
         />
       </div>
+
+      <ReactPaginate
+        nextLabel=">"
+        onPageChange={({ selected }) => onPageChange(selected)}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={Math.ceil(total / 8)}
+        previousLabel="<"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+      />
     </>
   );
 };
@@ -59,10 +96,10 @@ export const Interior = ({ interiors }: Props): JSX.Element => {
 export async function getServerSideProps() {
   const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}interior`);
 
-  const data = await resp.json();
+  const { results, total } = await resp.json();
 
   return {
-    props: { interiors: data },
+    props: { results, total },
   };
 }
 

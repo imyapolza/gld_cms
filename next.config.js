@@ -16,6 +16,7 @@ const nextConfig = {
         pathname: "/entranceImages/**",
       },
     ],
+    minimumCacheTTL: 60,
   },
 };
 
