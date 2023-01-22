@@ -56,7 +56,7 @@ const DataMapping = <T,>({
         ))}
 
       {data && Array.isArray(data) && data.length === 0 && (
-        <NoDataText title="Пока здесь нет дверей 😨" />
+        <NoDataText title="Пока здесь нет товаров 😨" />
       )}
     </>
   );

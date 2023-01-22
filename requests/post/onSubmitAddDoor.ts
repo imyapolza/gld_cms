@@ -28,7 +28,13 @@ const onSubmitAddDoor = async <T>({
 
     const newData = await resp.json();
 
-    if (resp.status >= 200) {
+    if (resp.status === 401) {
+      toast.error(`Не удалось добавить, ${resp.statusText}`);
+      setLoadingAdd(false);
+      console.log("resp", resp);
+    }
+
+    if (resp.status >= 200 && resp.status !== 401) {
       window.location.hash = "";
       router.replace(router.asPath.replace("#", ""));
 
