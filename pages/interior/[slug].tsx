@@ -5,6 +5,7 @@ import Characteristics from "components/Characteristics/Characteristics";
 import { useState } from "react";
 import onSubmitName from "requests/patch/onChangeName";
 import clsx from "clsx";
+import Layout from "components/Layout/Layout";
 
 interface Props {
   interior: Item;
@@ -49,33 +50,35 @@ const InteriorSlug = ({ interior }: Props): JSX.Element => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      {isChangeName ? (
-        <input
-          className={clsx(styles.name, styles.input)}
-          type="text"
-          autoFocus
-          defaultValue={name ? name : interior.name}
-          onBlur={onBlurInput}
-        />
-      ) : (
-        <h1 className={styles.name} onClick={onChangeName}>
-          {name ? name : interior.name}
-        </h1>
-      )}
-      <div className={styles.main}>
-        <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${interior.picturePath}`}
-          alt="interior door image"
-          width={340}
-          height={450}
-        />
-        <Characteristics<Array<Characteristic>>
-          characteristics={characteristics}
-          item={interior}
-        />
+    <Layout>
+      <div className={styles.wrapper}>
+        {isChangeName ? (
+          <input
+            className={clsx(styles.name, styles.input)}
+            type="text"
+            autoFocus
+            defaultValue={name ? name : interior.name}
+            onBlur={onBlurInput}
+          />
+        ) : (
+          <h1 className={styles.name} onClick={onChangeName}>
+            {name ? name : interior.name}
+          </h1>
+        )}
+        <div className={styles.main}>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}${interior.picturePath}`}
+            alt="interior door image"
+            width={340}
+            height={450}
+          />
+          <Characteristics<Array<Characteristic>>
+            characteristics={characteristics}
+            item={interior}
+          />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

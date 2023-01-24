@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Characteristics from "components/Characteristics/Characteristics";
+import Layout from "components/Layout/Layout";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { useState } from "react";
@@ -43,6 +44,7 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
   };
 
   return (
+    <Layout>
     <div className={styles.wrapper}>
       {isChangeName ? (
         <input
@@ -70,6 +72,7 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
         />
       </div>
     </div>
+    </Layout>
   );
 };
 
