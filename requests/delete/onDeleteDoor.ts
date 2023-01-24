@@ -23,6 +23,7 @@ const onDeleteDoor = async <T>({
       `${process.env.NEXT_PUBLIC_API_URL}${page}/${id}`,
       {
         method: "DELETE",
+        credentials: "include",
       }
     );
 
