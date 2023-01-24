@@ -24,6 +24,7 @@ const onSubmitAddDoor = async <T>({
     const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${page}/file`, {
       method: "POST",
       body: formData,
+      credentials: "include",
     });
 
     const newData = await resp.json();
