@@ -22,7 +22,6 @@ const Modal = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log("router", router);
     if (isOpen) {
       router.push({
         hash: "#openModal",
