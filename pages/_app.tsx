@@ -10,7 +10,7 @@ import "styles/pagination.scss";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
@@ -33,9 +33,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={raleway.className}>
       <Toaster position="bottom-right" />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+
+      <Component {...pageProps} />
     </main>
   );
 }

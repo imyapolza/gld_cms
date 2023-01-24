@@ -1,6 +1,7 @@
 import AddCardButton from "components/AddCardButton/AddCardButton";
 import AddCardForm from "components/AddCardForm/AddCardForm";
 import DataMapping from "components/DataMapping/DataMapping";
+import Layout from "components/Layout/Layout";
 import Modal from "components/Modal/Modal";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import { useState } from "react";
@@ -17,6 +18,7 @@ const Fitting = () => {
 
   return (
     <>
+    <Layout>
       <AddCardButton title="Добавить входную дверь" />
 
       <Modal
@@ -46,6 +48,7 @@ const Fitting = () => {
           }
         />
       </div>
+      </Layout>
     </>
   );
 };

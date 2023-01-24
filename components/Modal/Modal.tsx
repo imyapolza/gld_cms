@@ -1,5 +1,7 @@
 import clsx from "clsx";
-import { useRef } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -7,9 +9,27 @@ interface Props {
   title: string;
   height?: string;
   className?: string;
+  isOpen?: boolean;
 }
 
-const Modal = ({ children, title, height, className }: Props): JSX.Element => {
+const Modal = ({
+  children,
+  title,
+  height,
+  className,
+  isOpen,
+}: Props): JSX.Element => {
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log("router", router);
+    if (isOpen) {
+      router.push({
+        hash: "#openModal",
+      });
+    }
+  }, [isOpen]);
+
   return (
     <div id="openModal" className={styles.modal}>
       <div className={styles["modal-dialog"]}>
@@ -32,4 +52,6 @@ const Modal = ({ children, title, height, className }: Props): JSX.Element => {
   );
 };
 
-export default Modal;
+export default dynamic(() => Promise.resolve(Modal), {
+  ssr: false,
+});

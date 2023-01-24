@@ -1,0 +1,22 @@
+.label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+}
+
+.input {
+  height: 45px;
+  margin-left: 6px;
+  background: #ffffff;
+  border: 4px solid #6e9c9f;
+  border-radius: 4px;
+  font-size: 18px;
+  padding-left: 8px;
+  margin-top: 15px;
+}
+
+.input:focus {
+  border: 4px solid #6e9c9f;
+  outline: none;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}

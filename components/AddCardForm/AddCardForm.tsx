@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Button from "components/Button/Button";
+import Input from "components/Input/Input";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import { useRef, useState } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
@@ -153,39 +154,32 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
-        <label className={styles.label}>
-          Название:
-          <input
-            {...register("name", {
-              required: true,
-              maxLength: 30,
-            })}
-            className={styles.name_input}
-            type="text"
-            placeholder="Название двери..."
-          />
-          {errors.name && (
-            <span className={styles.error}>
-              Это поле обязательно к заполнению
-            </span>
-          )}
-        </label>
+        <Input
+          {...register("name", {
+            required: true,
+            maxLength: 30,
+          })}
+          label="Название:"
+          type="text"
+          placeholder="Название двери..."
+        />
+        {errors.name && (
+          <span className={styles.error}>
+            Это поле обязательно к заполнению
+          </span>
+        )}
 
-        <label className={styles.label}>
-          Цена:
-          <input
-            {...register("price", {
-              required: true,
-              maxLength: 6,
-            })}
-            className={styles.name_input}
-            type="number"
-            placeholder="Цена..."
-          />
-          {errors.price && (
-            <span className={styles.error}>Максимум 6 цифр</span>
-          )}
-        </label>
+        <Input
+          {...register("price", {
+            required: true,
+            maxLength: 6,
+          })}
+          label="Цена:"
+          classNameLabel={styles.price}
+          type="number"
+          placeholder="Цена..."
+        />
+        {errors.price && <span className={styles.error}>Максимум 6 цифр</span>}
 
         <label className={styles.label}>
           Характеристики:
@@ -193,10 +187,10 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             <div key={index}>
               <div className={styles.characteristics}>
                 <input
-                  key={field.id}
                   {...register(`characteristics.${index}.name`, {
                     required: true,
                   })}
+                  key={field.id}
                   className={styles.name_input}
                   type="text"
                   minLength={3}
@@ -230,19 +224,15 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             </div>
           ))}
         </label>
-
         {fields.length < 11 && (
           <Button onClick={onAddCharacteristic}>Добавить характеристику</Button>
         )}
-
         <label className={styles.label}>Фото двери:</label>
-
         {base64 && (
           <button className={styles.delete_img} onClick={() => setBase64("")}>
             Удалить изображение
           </button>
         )}
-
         {isFailedLoadSize && (
           <div className={styles.failed}>
             Не удалось загрузить. Слишком большой файл! (Больше 1 МБ)
@@ -254,17 +244,14 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             ширину и не менее 1000 пикселей в высоту!
           </div>
         )}
-
         {isFailedLoadType && (
           <div className={styles.failed}>
             Не удалось загрузить. Изображение должно быть формата png, jpg, jpeg
           </div>
         )}
-
         {isLoadingImage && (
           <div className={styles.loading}>Загрузка изображения...</div>
         )}
-
         {!base64 && (
           <>
             <input
@@ -310,7 +297,6 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             </label>
           </>
         )}
-
         {dragActive && (
           <div
             className={styles["drag-file-element"]}
@@ -329,7 +315,6 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             />
           )}
         </div>
-
         {base64 && (
           <>
             {isLoadingAdd ? (

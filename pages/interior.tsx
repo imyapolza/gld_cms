@@ -8,6 +8,7 @@ import styles from "styles/pages/interior.module.scss";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import ReactPaginate from "react-paginate";
 import onChangePage from "requests/get/onChangePage";
+import Layout from "components/Layout/Layout";
 
 interface Props {
   results: Array<Item>;
@@ -40,6 +41,7 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
 
   return (
     <>
+    <Layout>
       <AddCardButton title="Добавить межкомнатную дверь" />
 
       <Modal
@@ -89,6 +91,7 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
         containerClassName="pagination"
         activeClassName="active"
       />
+      </Layout>
     </>
   );
 };
