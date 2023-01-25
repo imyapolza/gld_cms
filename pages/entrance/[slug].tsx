@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Characteristics from "components/Characteristics/Characteristics";
-import Layout from "components/Layout/Layout";
+import Layout from "layouts/Layout/Layout";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { useState } from "react";
@@ -45,33 +45,33 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
 
   return (
     <Layout>
-    <div className={styles.wrapper}>
-      {isChangeName ? (
-        <input
-          className={clsx(styles.name, styles.input)}
-          type="text"
-          autoFocus
-          defaultValue={name ? name : entrance.name}
-          onBlur={onBlurInput}
-        />
-      ) : (
-        <h1 className={styles.name} onClick={onChangeName}>
-          {name ? name : entrance.name}
-        </h1>
-      )}
-      <div className={styles.main}>
-        <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}
-          alt="entrance door image"
-          width={340}
-          height={450}
-        />
-        <Characteristics<Array<Characteristic>>
-          characteristics={characteristics}
-          item={entrance}
-        />
+      <div className={styles.wrapper}>
+        {isChangeName ? (
+          <input
+            className={clsx(styles.name, styles.input)}
+            type="text"
+            autoFocus
+            defaultValue={name ? name : entrance.name}
+            onBlur={onBlurInput}
+          />
+        ) : (
+          <h1 className={styles.name} onClick={onChangeName}>
+            {name ? name : entrance.name}
+          </h1>
+        )}
+        <div className={styles.main}>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}
+            alt="entrance door image"
+            width={340}
+            height={450}
+          />
+          <Characteristics<Array<Characteristic>>
+            characteristics={characteristics}
+            item={entrance}
+          />
+        </div>
       </div>
-    </div>
     </Layout>
   );
 };

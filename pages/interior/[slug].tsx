@@ -5,7 +5,7 @@ import Characteristics from "components/Characteristics/Characteristics";
 import { useState } from "react";
 import onSubmitName from "requests/patch/onChangeName";
 import clsx from "clsx";
-import Layout from "components/Layout/Layout";
+import Layout from "layouts/Layout/Layout";
 
 interface Props {
   interior: Item;

@@ -7,7 +7,7 @@ import DataMapping from "components/DataMapping/DataMapping";
 import styles from "styles/pages/page.module.scss";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import ReactPaginate from "react-paginate";
-import Layout from "components/Layout/Layout";
+import Layout from "layouts/Layout/Layout";
 import { useRouter } from "next/router";
 import useQueryParams from "hooks/useQueryParams";
 

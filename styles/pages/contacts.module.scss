@@ -1,3 +1,8 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .phone {
   color: black;
   cursor: pointer;
@@ -14,6 +19,11 @@
   &_img {
     margin-left: 5px;
   }
+}
+
+.number {
+  font-size: 1em;
+  font-weight: normal;
 }
 
 .input {

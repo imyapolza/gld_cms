@@ -1,4 +1,4 @@
-import Layout from "components/Layout/Layout";
+import Layout from "layouts/Layout/Layout";
 import { h2 } from "constants/Index";
 import { useEffect, useState } from "react";
 import onChangeAddress from "requests/patch/onChangeAddress";

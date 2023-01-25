@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import Layout from "components/Layout/Layout";
+import Layout from "layouts/Layout/Layout";
 import { Router } from "next/router";
 
 import { Raleway } from "@next/font/google";
