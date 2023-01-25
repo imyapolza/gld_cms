@@ -1,6 +1,6 @@
 import AddCardForm from "components/AddCardForm/AddCardForm";
 import Modal from "components/Modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddCardButton from "components/AddCardButton/AddCardButton";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import DataMapping from "components/DataMapping/DataMapping";
@@ -9,6 +9,7 @@ import onDeleteDoor from "requests/delete/onDeleteDoor";
 import ReactPaginate from "react-paginate";
 import onChangePage from "requests/get/onChangePage";
 import Layout from "components/Layout/Layout";
+import { useRouter } from "next/router";
 
 interface Props {
   results: Array<Item>;
@@ -21,13 +22,32 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
 
   const [items, setItems] = useState<Array<Item>>(results);
 
+  const router = useRouter();
+
   const { onSubmitAddDoor, setData, data, isLoadingAdd } =
     useSubmiteAddDoor<Item>({
       items: results,
       page: "interior",
+      setItems,
     });
 
+  useEffect(() => {
+    router.push({
+      query: {
+        page: 1,
+        limit: 8,
+      },
+    });
+  }, []);
+
   const onPageChange = async (page: number) => {
+    router.push({
+      query: {
+        page: page + 1,
+        limit: 8,
+      },
+    });
+
     const generatedOffset = page * 8;
 
     const { results } = await onChangePage({
@@ -41,56 +61,57 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
 
   return (
     <>
-    <Layout>
-      <AddCardButton title="Добавить межкомнатную дверь" />
+      <Layout>
+        <AddCardButton title="Добавить межкомнатную дверь" />
 
-      <Modal
-        className={styles.modal}
-        title="Добавление межкомнатной двери"
-        height={"70vh"}
-      >
-        <AddCardForm
-          onSubmitAddDoor={onSubmitAddDoor}
-          isLoadingAdd={isLoadingAdd}
+        <Modal
+          className={styles.modal}
+          title="Добавление межкомнатной двери"
+          height={"70vh"}
+        >
+          <AddCardForm
+            onSubmitAddDoor={onSubmitAddDoor}
+            isLoadingAdd={isLoadingAdd}
+          />
+        </Modal>
+
+        <div className={styles.wrapper}>
+          <DataMapping<Array<Item>>
+            data={items}
+            isLoadingDelete={isLoadingDelete}
+            deleteId={deleteId}
+            onDelete={(id: number) =>
+              onDeleteDoor<Item>({
+                id,
+                setDeleteId,
+                setLoadingDelete,
+                setItems,
+                page: "interior",
+                router,
+              })
+            }
+          />
+        </div>
+
+        <ReactPaginate
+          nextLabel=">"
+          onPageChange={({ selected }) => onPageChange(selected)}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={Math.ceil(total / 8)}
+          previousLabel="<"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
         />
-      </Modal>
-
-      <div className={styles.wrapper}>
-        <DataMapping<Array<Item>>
-          data={items}
-          isLoadingDelete={isLoadingDelete}
-          deleteId={deleteId}
-          onDelete={(id: number) =>
-            onDeleteDoor<Item>({
-              id,
-              setDeleteId,
-              setLoadingDelete,
-              setData,
-              page: "interior",
-            })
-          }
-        />
-      </div>
-
-      <ReactPaginate
-        nextLabel=">"
-        onPageChange={({ selected }) => onPageChange(selected)}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={Math.ceil(total / 8)}
-        previousLabel="<"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination"
-        activeClassName="active"
-      />
       </Layout>
     </>
   );

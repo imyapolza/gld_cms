@@ -7,7 +7,7 @@ interface Arguments<T> {
   page: string;
   setLoadingAdd: (arg: boolean) => void;
   router: NextRouter;
-  setData: (data: Array<T>) => void;
+  setItems: (data: Array<T>) => void;
 }
 
 const onSubmitAddDoor = async <T>({
@@ -15,17 +15,24 @@ const onSubmitAddDoor = async <T>({
   page,
   setLoadingAdd,
   router,
-  setData,
+  setItems,
 }: Arguments<T>) => {
   try {
     NProgress.start();
     setLoadingAdd(true);
 
-    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${page}/file`, {
-      method: "POST",
-      body: formData,
-      credentials: "include",
-    });
+    const query = router.query;
+
+    const offset = (Math.abs(Number(query.page)) - 1) * 8;
+
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}${page}/file?page=${offset}&limit=${query.limit}`,
+      {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      }
+    );
 
     const newData = await resp.json();
 
@@ -39,7 +46,7 @@ const onSubmitAddDoor = async <T>({
       window.location.hash = "";
       router.replace(router.asPath.replace("#", ""));
 
-      setData(newData);
+      setItems(newData.results);
       NProgress.done();
       setLoadingAdd(false);
       toast.success("Добавлено!");
