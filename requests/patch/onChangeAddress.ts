@@ -23,6 +23,7 @@ const onChangeAddress = async ({
           "Content-Type": "application/json",
         },
         method: "PATCH",
+        credentials: "include",
         body: JSON.stringify({
           address: target,
         }),

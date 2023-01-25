@@ -19,6 +19,7 @@ const onChangePhone = async ({ e, setChangePhone, setPhone }: Arguments) => {
           "Content-Type": "application/json",
         },
         method: "PATCH",
+        credentials: "include",
         body: JSON.stringify({
           number: target,
         }),

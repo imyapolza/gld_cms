@@ -29,6 +29,7 @@ const onChangePrice = async ({
             "Content-Type": "application/json",
           },
           method: "PATCH",
+          credentials: "include",
           body: JSON.stringify({
             price: target,
           }),
