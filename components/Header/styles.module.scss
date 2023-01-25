@@ -7,7 +7,7 @@
 }
 
 .list {
-  width: 35em;
+  width: 54em;
   display: flex;
   justify-content: space-between;
 
@@ -25,24 +25,6 @@
 
   &_link {
     color: black;
-  }
-}
-
-.phone {
-  color: black;
-  cursor: pointer;
-  margin-left: 10px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-
-  &_wrapper {
-    display: flex;
-  }
-
-  &_img {
-    margin-left: 5px;
   }
 }
 
@@ -83,10 +65,4 @@
 .button {
   margin-top: 20px !important;
   padding: 0 10px;
-}
-
-.input {
-  outline: 0;
-  border: 0;
-  background: #f1eadc;
 }

@@ -1,15 +1,15 @@
 import AddCardForm from "components/AddCardForm/AddCardForm";
 import Modal from "components/Modal/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddCardButton from "components/AddCardButton/AddCardButton";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import DataMapping from "components/DataMapping/DataMapping";
 import styles from "styles/pages/interior.module.scss";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import ReactPaginate from "react-paginate";
-import onChangePage from "requests/get/onChangePage";
 import Layout from "components/Layout/Layout";
 import { useRouter } from "next/router";
+import useQueryParams from "hooks/useQueryParams";
 
 interface Props {
   results: Array<Item>;
@@ -24,40 +24,17 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
 
   const router = useRouter();
 
-  const { onSubmitAddDoor, setData, data, isLoadingAdd } =
-    useSubmiteAddDoor<Item>({
-      items: results,
-      page: "interior",
-      setItems,
-    });
+  const { onSubmitAddDoor, isLoadingAdd } = useSubmiteAddDoor<Item>({
+    items: results,
+    page: "interior",
+    setItems,
+  });
 
-  useEffect(() => {
-    router.push({
-      query: {
-        page: 1,
-        limit: 8,
-      },
-    });
-  }, []);
-
-  const onPageChange = async (page: number) => {
-    router.push({
-      query: {
-        page: page + 1,
-        limit: 8,
-      },
-    });
-
-    const generatedOffset = page * 8;
-
-    const { results } = await onChangePage({
-      pageName: "interior",
-      offset: generatedOffset,
-      limit: 8,
-    });
-
-    setItems(results);
-  };
+  const onPageChange = useQueryParams({
+    router,
+    setItems,
+    pageName: "interior",
+  });
 
   return (
     <>

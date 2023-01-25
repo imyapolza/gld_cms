@@ -2,6 +2,9 @@ export const menu = [
   "Главная",
   "Межкомнатные двери",
   "Входные двери",
+  "Арки",
+  "Фурнитура",
+  "Всё для бани",
   "О нас",
   "Контакты",
 ];
@@ -14,6 +17,9 @@ export const routerPaths = {
   0: "/",
   1: "/interior",
   2: "/entrance",
-  3: "/about",
-  4: "/contacts",
+  3: "/arch",
+  4: "/fitting",
+  5: "/bath-things",
+  6: "/about",
+  7: "/contacts",
 };

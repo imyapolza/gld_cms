@@ -1,0 +1,23 @@
+.phone {
+  color: black;
+  cursor: pointer;
+  margin-left: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+
+  &_wrapper {
+    display: flex;
+  }
+
+  &_img {
+    margin-left: 5px;
+  }
+}
+
+.input {
+  outline: 0;
+  border: 0;
+  background: #f1eadc;
+}
