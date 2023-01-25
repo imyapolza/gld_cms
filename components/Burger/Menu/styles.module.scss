@@ -1,0 +1,43 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  opacity: 0;
+  height: 100vh;
+  visibility: hidden;
+  text-align: left;
+  padding: 2rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.3s ease-in-out;
+
+  a {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    padding: 1.5rem 0;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s linear;
+
+    &:hover {
+      color: #6e9c9f;
+    }
+  }
+}
+
+.nav_active {
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+  visibility: visible;
+}
+
+@media (max-width: 380px) {
+  .nav {
+    font-size: 6vw;
+    width: 85vw;
+  }
+}

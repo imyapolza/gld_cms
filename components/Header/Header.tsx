@@ -4,8 +4,14 @@ import DoorLogo from "components/DoorLogo/DoorLogo";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState } from "react";
+import Burger from "components/Burger/Button/Button";
+import Menu from "components/Burger/Menu/Menu";
 
 const Header = (): JSX.Element => {
+  const [open, setOpen] = useState(false);
+  const menuId = "main-menu";
+
   const router = useRouter();
 
   return (
@@ -17,7 +23,7 @@ const Header = (): JSX.Element => {
         </Link>
       </div>
 
-      <ul className={styles.list}>
+      <nav className={styles.list}>
         {menu.map((name, index) => (
           <li key={index} className={clsx(styles.list_item)}>
             <Link
@@ -35,7 +41,10 @@ const Header = (): JSX.Element => {
             </Link>
           </li>
         ))}
-      </ul>
+      </nav>
+
+      <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+      <Menu open={open} setOpen={setOpen} id={menuId} />
     </div>
   );
 };

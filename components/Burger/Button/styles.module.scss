@@ -1,0 +1,58 @@
+.button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.button > span {
+  width: 2rem;
+  height: 0.25rem;
+  background: #6e9c9f;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+
+  :first-child {
+    transform: rotate(0);
+  }
+
+  :nth-child(2) {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  :nth-child(3) {
+    transform: rotate(0);
+  }
+}
+
+.button_active {
+  background: black;
+}
+
+.active_1 {
+  transform: rotate(45deg);
+}
+
+.active_2 {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.active_3 {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 1380px) {
+  .button {
+    display: flex;
+  }
+}

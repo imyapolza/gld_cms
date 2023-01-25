@@ -66,3 +66,9 @@
   margin-top: 20px !important;
   padding: 0 10px;
 }
+
+@media (max-width: 1380px) {
+  .list {
+    display: none;
+  }
+}

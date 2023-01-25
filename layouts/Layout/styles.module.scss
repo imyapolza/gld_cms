@@ -7,5 +7,12 @@
 }
 
 .right_background {
-  background: url("../../public/right-side.png") no-repeat fixed right;
+  background: url("../../public/right-side.png") fixed right;
+  background-repeat: repeat-y;
+}
+
+@media (max-width: 650px) {
+  .right_background {
+    background: url("../../public/right-side.png");
+  }
 }

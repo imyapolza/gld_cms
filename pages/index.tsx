@@ -18,7 +18,7 @@ function Home({ home }: Props): JSX.Element {
 
   useEffect(() => {
     window.localStorage.setItem("number", JSON.stringify(home.number));
-  }, []);
+  }, [home.number]);
 
   return (
     <Layout>
