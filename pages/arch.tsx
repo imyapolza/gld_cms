@@ -6,7 +6,7 @@ import Modal from "components/Modal/Modal";
 import useQueryParams from "hooks/useQueryParams";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/page.module.scss";
@@ -16,7 +16,7 @@ interface Props {
   total: number;
 }
 
-const Fitting = ({ results, total }: Props): JSX.Element => {
+export const Arch = ({ results, total }: Props): JSX.Element => {
   const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
@@ -26,25 +26,21 @@ const Fitting = ({ results, total }: Props): JSX.Element => {
 
   const { onSubmitAddDoor, isLoadingAdd } = useSubmiteAddDoor<Item>({
     items: results,
-    page: "fitting",
+    page: "arch",
     setItems,
   });
 
   const onPageChange = useQueryParams({
     router,
     setItems,
-    pageName: "fitting",
+    pageName: "arch",
   });
 
   return (
     <Layout>
-      <AddCardButton title="Добавить элемент фурнитуры" />
+      <AddCardButton title="Добавить арку" />
 
-      <Modal
-        className={styles.modal}
-        title="Добавление фурнитуры"
-        height={"70vh"}
-      >
+      <Modal className={styles.modal} title="Добавление арки" height={"70vh"}>
         <AddCardForm
           onSubmitAddDoor={onSubmitAddDoor}
           isLoadingAdd={isLoadingAdd}
@@ -62,7 +58,7 @@ const Fitting = ({ results, total }: Props): JSX.Element => {
               setDeleteId,
               setLoadingDelete,
               setItems,
-              page: "fitting",
+              page: "arch",
               router,
             })
           }
@@ -95,7 +91,7 @@ const Fitting = ({ results, total }: Props): JSX.Element => {
 };
 
 export async function getServerSideProps() {
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}fitting`);
+  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}arch`);
 
   const { results, total } = await resp.json();
 
@@ -104,4 +100,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default Fitting;
+export default Arch;

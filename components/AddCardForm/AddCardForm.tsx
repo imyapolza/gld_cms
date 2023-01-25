@@ -161,7 +161,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
           })}
           label="Название:"
           type="text"
-          placeholder="Название двери..."
+          placeholder="Название товара..."
         />
         {errors.name && (
           <span className={styles.error}>
@@ -177,7 +177,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
           label="Цена:"
           classNameLabel={styles.price}
           type="number"
-          placeholder="Цена..."
+          placeholder="Цена товара..."
         />
         {errors.price && <span className={styles.error}>Максимум 6 цифр</span>}
 
@@ -227,7 +227,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         {fields.length < 11 && (
           <Button onClick={onAddCharacteristic}>Добавить характеристику</Button>
         )}
-        <label className={styles.label}>Фото двери:</label>
+        <label className={styles.label}>Изображение:</label>
         {base64 && (
           <button className={styles.delete_img} onClick={() => setBase64("")}>
             Удалить изображение

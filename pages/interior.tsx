@@ -4,7 +4,7 @@ import { useState } from "react";
 import AddCardButton from "components/AddCardButton/AddCardButton";
 import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
 import DataMapping from "components/DataMapping/DataMapping";
-import styles from "styles/pages/interior.module.scss";
+import styles from "styles/pages/page.module.scss";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import ReactPaginate from "react-paginate";
 import Layout from "components/Layout/Layout";
@@ -16,7 +16,7 @@ interface Props {
   total: number;
 }
 
-export const Interior = ({ results, total }: Props): JSX.Element => {
+const Interior = ({ results, total }: Props): JSX.Element => {
   const [isLoadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
@@ -70,25 +70,27 @@ export const Interior = ({ results, total }: Props): JSX.Element => {
           />
         </div>
 
-        <ReactPaginate
-          nextLabel=">"
-          onPageChange={({ selected }) => onPageChange(selected)}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={Math.ceil(total / 8)}
-          previousLabel="<"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-        />
+        {total > 8 && (
+          <ReactPaginate
+            nextLabel=">"
+            onPageChange={({ selected }) => onPageChange(selected)}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={Math.ceil(total / 8)}
+            previousLabel="<"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+          />
+        )}
       </Layout>
     </>
   );

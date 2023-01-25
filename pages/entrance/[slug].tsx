@@ -62,7 +62,7 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
       <div className={styles.main}>
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}
-          alt="interior door image"
+          alt="entrance door image"
           width={340}
           height={450}
         />

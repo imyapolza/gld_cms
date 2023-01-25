@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
-import styles from "styles/pages/entrance.module.scss";
+import styles from "styles/pages/page.module.scss";
 
 interface Props {
   results: Array<Item>;
@@ -70,25 +70,27 @@ const Entrance = ({ results, total }: Props): JSX.Element => {
           />
         </div>
 
-        <ReactPaginate
-          nextLabel=">"
-          onPageChange={({ selected }) => onPageChange(selected)}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={Math.ceil(total / 8)}
-          previousLabel="<"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-        />
+        {total > 8 && (
+          <ReactPaginate
+            nextLabel=">"
+            onPageChange={({ selected }) => onPageChange(selected)}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={Math.ceil(total / 8)}
+            previousLabel="<"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+          />
+        )}
       </Layout>
     </>
   );

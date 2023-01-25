@@ -45,9 +45,7 @@ const DataMapping = <T,>({
               </>
             )}
 
-            <Link
-              href={`${router.asPath.split("/")[1].slice(0, 8)}/${item.id}`}
-            >
+            <Link href={`${router.pathname}/${item.id}`}>
               <Card
                 title={item.name}
                 price={item.price}
