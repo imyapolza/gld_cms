@@ -3,7 +3,6 @@ import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import NoDataText from "components/NoDataText/NoDataText";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import styles from "./styles.module.scss";
 
 interface Props<T> {

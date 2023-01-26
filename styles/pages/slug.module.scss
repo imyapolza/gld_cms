@@ -5,15 +5,12 @@
 .main {
   display: flex;
   margin-top: 40px;
+  align-items: center;
 }
 
 .name {
   margin-left: 65px;
   font-weight: 300 !important;
-}
-
-.w-200 {
-  width: 200px;
 }
 
 .delete {
@@ -26,7 +23,7 @@
   font-size: 2em;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 875px) {
   .main {
     flex-direction: column;
   }

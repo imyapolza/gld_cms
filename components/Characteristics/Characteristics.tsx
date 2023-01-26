@@ -25,7 +25,7 @@ const Characteristics = <T,>({
   };
 
   return (
-    <ul>
+    <ul className={styles.ul}>
       {characteristics &&
         Array.isArray(characteristics) &&
         characteristics.map(({ name, value }, index) => (
@@ -63,7 +63,7 @@ const Characteristics = <T,>({
                 />
               </>
             ) : (
-              <div onClick={onActivePrice}>
+              <div className={styles.price} onClick={onActivePrice}>
                 {isFirst(index) ? (
                   <>
                     {newPrice

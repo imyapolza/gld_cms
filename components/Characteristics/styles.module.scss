@@ -5,6 +5,7 @@
 
   &_title {
     font-weight: bold;
+    margin-right: 10px;
   }
 }
 
@@ -12,13 +13,31 @@
   letter-spacing: 0.2em;
 }
 
-.w-200 {
-  width: 200px;
-}
-
 .input {
   outline: 0;
   border: 0;
   width: 155px;
   height: 36px;
+}
+
+@media (max-width: 875px) {
+  .price {
+    width: 100%;
+  }
+
+  .item {
+    flex-direction: column;
+
+    &_title {
+      margin-bottom: 10px;
+    }
+  }
+
+  .w-200 {
+    width: 100%;
+  }
+
+  .ul {
+    padding: 0px 65px;
+  }
 }
