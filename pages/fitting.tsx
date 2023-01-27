@@ -10,6 +10,7 @@ import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/page.module.scss";
+import Head from "next/head";
 
 interface Props {
   results: Array<Item>;
@@ -38,6 +39,13 @@ const Fitting = ({ results, total }: Props): JSX.Element => {
 
   return (
     <Layout>
+      <Head>
+        <title>Фурнитура</title>
+        <meta
+          name="description"
+          content="Купить фурнитуру в межозерном, галерея дверей"
+        />
+      </Head>
       <AddCardButton title="Добавить элемент фурнитуры" />
 
       <Modal

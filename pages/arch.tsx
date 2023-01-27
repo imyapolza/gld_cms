@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/page.module.scss";
+import Head from "next/head";
 
 interface Props {
   results: Array<Item>;
@@ -38,6 +39,13 @@ export const Arch = ({ results, total }: Props): JSX.Element => {
 
   return (
     <Layout>
+       <Head>
+        <title>Арки</title>
+        <meta
+          name="description"
+          content="Купить арки в межозерном, галерея дверей"
+        />
+      </Head>
       <AddCardButton title="Добавить арку" />
 
       <Modal className={styles.modal} title="Добавление арки" height={"70vh"}>

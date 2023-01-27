@@ -5,6 +5,7 @@ import styles from "styles/pages/contacts.module.scss";
 import { onPhoneMask } from "utils/phoneMask";
 import cartSrc from "public/phone.png";
 import Image from "next/image";
+import { Head } from "next/document";
 
 const Contacts = () => {
   const [isChangePhone, setChangePhone] = useState<boolean>(false);
@@ -28,6 +29,13 @@ const Contacts = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Контакты</title>
+        <meta
+          name="description"
+          content="Галерея дверей контакты, связаться с галерея дверей"
+        />
+      </Head>
       <div className={styles.wrapper}>
         <h2 className={styles.number}>Номер телефона:</h2>
         <div className={styles.phone_wrapper}>

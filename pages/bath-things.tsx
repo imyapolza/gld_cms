@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import onDeleteDoor from "requests/delete/onDeleteDoor";
 import styles from "styles/pages/page.module.scss";
+import Head from "next/head";
 
 interface Props {
   results: Array<Item>;
@@ -38,6 +39,13 @@ const BathThings = ({ results, total }: Props): JSX.Element => {
 
   return (
     <Layout>
+      <Head>
+        <title>Всё для бани</title>
+        <meta
+          name="description"
+          content="Купить товары для бани в межозерном, галерея дверей"
+        />
+      </Head>
       <AddCardButton title="Добавить банный товар" />
 
       <Modal

@@ -3,6 +3,7 @@ import { h2 } from "constants/Index";
 import { useEffect, useState } from "react";
 import onChangeAddress from "requests/patch/onChangeAddress";
 import styles from "styles/pages/index.module.scss";
+import Head from "next/head";
 
 interface Props {
   home: Home;
@@ -22,6 +23,10 @@ function Home({ home }: Props): JSX.Element {
 
   return (
     <Layout>
+      <Head>
+        <title>Галерея дверей</title>
+        <meta name="description" content="Купить двери в межозерном, галерея дверей" />
+      </Head>
       <div className={styles.wrapper}>
         <h2 className={styles.h2}>{h2}</h2>
         {isChangeAddress ? (

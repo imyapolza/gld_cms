@@ -10,6 +10,7 @@ import ReactPaginate from "react-paginate";
 import Layout from "layouts/Layout/Layout";
 import { useRouter } from "next/router";
 import useQueryParams from "hooks/useQueryParams";
+import Head from "next/head";
 
 interface Props {
   results: Array<Item>;
@@ -39,6 +40,13 @@ const Interior = ({ results, total }: Props): JSX.Element => {
   return (
     <>
       <Layout>
+        <Head>
+          <title>Межкомнатные двери</title>
+          <meta
+            name="description"
+            content="Купить межкомнатные двери в межозерном, галерея дверей"
+          />
+        </Head>
         <AddCardButton title="Добавить межкомнатную дверь" />
 
         <Modal
