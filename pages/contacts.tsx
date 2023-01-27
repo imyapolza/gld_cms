@@ -5,7 +5,7 @@ import styles from "styles/pages/contacts.module.scss";
 import { onPhoneMask } from "utils/phoneMask";
 import cartSrc from "public/phone.png";
 import Image from "next/image";
-import { Head } from "next/document";
+import Head from "next/head";
 
 const Contacts = () => {
   const [isChangePhone, setChangePhone] = useState<boolean>(false);
