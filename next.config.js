@@ -5,14 +5,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "194.87.98.104",
-        port: "8001",
+        hostname: process.env.NEXT_PUBLIC_API_URL,
+        port: process.env.NEXT_PUBLIC_API_PORT,
         pathname: "/interiorImages/**",
       },
       {
         protocol: "http",
-        hostname: "localhost",
-        port: "8000",
+        hostname: process.env.NEXT_PUBLIC_API_URL,
+        port: process.env.NEXT_PUBLIC_API_PORT,
         pathname: "/entranceImages/**",
       },
     ],
