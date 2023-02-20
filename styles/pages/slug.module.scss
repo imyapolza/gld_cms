@@ -23,6 +23,10 @@
   font-size: 2em;
 }
 
+.image {
+  object-fit: contain;
+}
+
 @media (max-width: 875px) {
   .main {
     flex-direction: column;

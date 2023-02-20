@@ -49,7 +49,7 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
         {isChangeName ? (
           <input
             className={clsx(styles.name, styles.input)}
-            type="text"
+            type='text'
             autoFocus
             defaultValue={name ? name : entrance.name}
             onBlur={onBlurInput}
@@ -61,8 +61,9 @@ const EntranceSlug = ({ entrance }: Props): JSX.Element => {
         )}
         <div className={styles.main}>
           <Image
+            className={styles.image}
             src={`${process.env.NEXT_PUBLIC_API_URL}${entrance.picturePath}`}
-            alt="entrance door image"
+            alt='entrance door image'
             width={340}
             height={450}
           />

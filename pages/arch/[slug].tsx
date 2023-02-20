@@ -1,11 +1,11 @@
-import { GetServerSidePropsContext } from "next";
-import Image from "next/image";
-import styles from "styles/pages/slug.module.scss";
-import Characteristics from "components/Characteristics/Characteristics";
-import { useState } from "react";
-import onSubmitName from "requests/patch/onChangeName";
-import clsx from "clsx";
-import Layout from "layouts/Layout/Layout";
+import { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
+import styles from 'styles/pages/slug.module.scss';
+import Characteristics from 'components/Characteristics/Characteristics';
+import { useState } from 'react';
+import onSubmitName from 'requests/patch/onChangeName';
+import clsx from 'clsx';
+import Layout from 'layouts/Layout/Layout';
 
 interface Props {
   arch: Item;
@@ -35,7 +35,7 @@ const ArchSlug = ({ arch }: Props): JSX.Element => {
       onCancelChangeName,
       setName,
       id: arch.id,
-      page: "arch",
+      page: 'arch'
     });
   };
 
@@ -55,7 +55,7 @@ const ArchSlug = ({ arch }: Props): JSX.Element => {
         {isChangeName ? (
           <input
             className={clsx(styles.name, styles.input)}
-            type="text"
+            type='text'
             autoFocus
             defaultValue={name ? name : arch.name}
             onBlur={onBlurInput}
@@ -67,8 +67,9 @@ const ArchSlug = ({ arch }: Props): JSX.Element => {
         )}
         <div className={styles.main}>
           <Image
+            className={styles.image}
             src={`${process.env.NEXT_PUBLIC_API_URL}${arch.picturePath}`}
-            alt="arch door image"
+            alt='arch door image'
             width={340}
             height={450}
           />
@@ -85,13 +86,13 @@ const ArchSlug = ({ arch }: Props): JSX.Element => {
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const id = ctx.query.slug;
   const resp = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}${ctx.resolvedUrl.split("/")[1]}/${id}`
+    `${process.env.NEXT_PUBLIC_API_URL}${ctx.resolvedUrl.split('/')[1]}/${id}`
   );
 
   const data = await resp.json();
 
   return {
-    props: { arch: data },
+    props: { arch: data }
   };
 }
 

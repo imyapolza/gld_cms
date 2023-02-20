@@ -55,7 +55,7 @@ const FittingSlug = ({ fitting }: Props): JSX.Element => {
         {isChangeName ? (
           <input
             className={clsx(styles.name, styles.input)}
-            type="text"
+            type='text'
             autoFocus
             defaultValue={name ? name : fitting.name}
             onBlur={onBlurInput}
@@ -67,8 +67,9 @@ const FittingSlug = ({ fitting }: Props): JSX.Element => {
         )}
         <div className={styles.main}>
           <Image
+            className={styles.image}
             src={`${process.env.NEXT_PUBLIC_API_URL}${fitting.picturePath}`}
-            alt="fitting door image"
+            alt='fitting door image'
             width={340}
             height={450}
           />
