@@ -9,8 +9,13 @@
 }
 
 .name {
-  margin-left: 65px;
-  font-weight: 300 !important;
+  font-weight: 300;
+
+  &_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .delete {
@@ -25,6 +30,7 @@
 
 .image {
   object-fit: contain;
+  margin-top: 10px;
 }
 
 @media (max-width: 875px) {

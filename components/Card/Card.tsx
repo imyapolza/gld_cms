@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss";
-import Image from "next/image";
-import overlaySrc from "public/card-overlay.png";
+import styles from './styles.module.scss';
+import Image from 'next/image';
+import overlaySrc from 'public/card-overlay.png';
 
 interface Props {
   title: string;
@@ -12,11 +12,11 @@ interface Props {
 const Card = ({ title, price, srcImage, onClick }: Props): JSX.Element => {
   return (
     <div className={styles.wrapper} onClick={onClick}>
-      <Image className={styles.arrow} src={overlaySrc} alt="next arrow" />
+      <Image className={styles.arrow} src={overlaySrc} alt='next arrow' />
       <Image
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: 'contain' }}
         src={srcImage}
-        alt="door"
+        alt='door'
         width={240}
         height={320}
       />
