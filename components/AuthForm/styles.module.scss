@@ -1,0 +1,21 @@
+.form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 20em;
+}
+
+.label {
+  margin-bottom: 25px;
+}
+
+.input {
+  margin-left: 0;
+}
+
+.error {
+  color: red;
+  display: flex;
+  margin-bottom: 20px;
+}

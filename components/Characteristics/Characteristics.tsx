@@ -1,7 +1,8 @@
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import styles from './styles.module.scss';
+import clsx from "clsx";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import onChangePrice from "requests/patch/onChangePrice";
+import styles from "./styles.module.scss";
 
 interface Props<T> {
   characteristics: T;
@@ -10,7 +11,7 @@ interface Props<T> {
 
 const Characteristics = <T,>({
   characteristics,
-  item
+  item,
 }: Props<T>): JSX.Element => {
   const [isChangePrice, setChangePrice] = useState<boolean>(false);
   const [newPrice, setNewPrice] = useState<string | null>(null);
@@ -32,28 +33,48 @@ const Characteristics = <T,>({
             key={index}
             className={styles.item}
             style={
-              isFirst(index) ? { marginBottom: '30px', fontSize: '2em' } : {}
+              isFirst(index) ? { marginBottom: "30px", fontSize: "2em" } : {}
             }
           >
             <div
               className={clsx(
                 styles.item_title,
-                index > 0 ? styles['w-200'] : styles.price_title
+                index > 0 ? styles["w-200"] : styles.price_title
               )}
             >
-              {isFirst(index) ? '' : name}
+              {isFirst(index) ? "" : name}
             </div>
-            <div className={styles.price} onClick={onActivePrice}>
-              {isFirst(index) ? (
-                <>
-                  {newPrice
-                    ? newPrice + ' ' + 'руб.'
-                    : item.price + ' ' + 'руб.'}
-                </>
-              ) : (
-                value
-              )}
-            </div>
+            {isChangePrice && index === 0 ? (
+              <>
+                <input
+                  autoFocus
+                  className={styles.input}
+                  type="text"
+                  defaultValue={newPrice ? newPrice : item.price}
+                  onBlur={(e) =>
+                    onChangePrice({
+                      e,
+                      item,
+                      setNewPrice,
+                      setChangePrice,
+                      page: router.asPath.split("/")[1],
+                    })
+                  }
+                />
+              </>
+            ) : (
+              <div className={styles.price} onClick={onActivePrice}>
+                {isFirst(index) ? (
+                  <>
+                    {newPrice
+                      ? newPrice + " " + "руб."
+                      : item.price + " " + "руб."}
+                  </>
+                ) : (
+                  value
+                )}
+              </div>
+            )}
           </li>
         ))}
     </ul>

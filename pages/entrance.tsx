@@ -1,13 +1,16 @@
-import DataMapping from 'components/DataMapping/DataMapping';
-import Layout from 'layouts/Layout/Layout';
-import useQueryParams from 'hooks/useQueryParams';
-
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import ReactPaginate from 'react-paginate';
-
-import styles from 'styles/pages/page.module.scss';
-import Head from 'next/head';
+import AddCardButton from "components/AddCardButton/AddCardButton";
+import AddCardForm from "components/AddCardForm/AddCardForm";
+import DataMapping from "components/DataMapping/DataMapping";
+import Layout from "layouts/Layout/Layout";
+import Modal from "components/Modal/Modal";
+import useQueryParams from "hooks/useQueryParams";
+import useSubmiteAddDoor from "hooks/useSubmiteAddDoor";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import ReactPaginate from "react-paginate";
+import onDeleteDoor from "requests/delete/onDeleteDoor";
+import styles from "styles/pages/page.module.scss";
+import Head from "next/head";
 
 interface Props {
   results: Array<Item>;
@@ -22,10 +25,16 @@ const Entrance = ({ results, total }: Props): JSX.Element => {
 
   const router = useRouter();
 
+  const { onSubmitAddDoor, isLoadingAdd } = useSubmiteAddDoor<Item>({
+    items: results,
+    page: "entrance",
+    setItems,
+  });
+
   const onPageChange = useQueryParams({
     router,
     setItems,
-    pageName: 'entrance'
+    pageName: "entrance",
   });
 
   return (
@@ -34,34 +43,60 @@ const Entrance = ({ results, total }: Props): JSX.Element => {
         <Head>
           <title>Входные двери</title>
           <meta
-            name='description'
-            content='Купить входные двери в межозерном, галерея дверей'
+            name="description"
+            content="Купить входные двери в межозерном, галерея дверей"
           />
         </Head>
+        <AddCardButton title="Добавить входную дверь" />
+
+        <Modal
+          className={styles.modal}
+          title="Добавление входной двери"
+          height={"70vh"}
+        >
+          <AddCardForm
+            onSubmitAddDoor={onSubmitAddDoor}
+            isLoadingAdd={isLoadingAdd}
+          />
+        </Modal>
 
         <div className={styles.wrapper}>
-          <DataMapping<Array<Item>> data={items} />
+          <DataMapping<Array<Item>>
+            data={items}
+            isLoadingDelete={isLoadingDelete}
+            deleteId={deleteId}
+            onDelete={(id: number) =>
+              onDeleteDoor<Item>({
+                id,
+                setDeleteId,
+                setLoadingDelete,
+                setItems,
+                page: "entrance",
+                router,
+              })
+            }
+          />
         </div>
 
         {total > 8 && (
           <ReactPaginate
-            nextLabel='>'
+            nextLabel=">"
             onPageChange={({ selected }) => onPageChange(selected)}
             pageRangeDisplayed={3}
             marginPagesDisplayed={2}
             pageCount={Math.ceil(total / 8)}
-            previousLabel='<'
-            pageClassName='page-item'
-            pageLinkClassName='page-link'
-            previousClassName='page-item'
-            previousLinkClassName='page-link'
-            nextClassName='page-item'
-            nextLinkClassName='page-link'
-            breakLabel='...'
-            breakClassName='page-item'
-            breakLinkClassName='page-link'
-            containerClassName='pagination'
-            activeClassName='active'
+            previousLabel="<"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
           />
         )}
       </Layout>
@@ -75,7 +110,7 @@ export async function getServerSideProps() {
   const { results, total } = await resp.json();
 
   return {
-    props: { results, total }
+    props: { results, total },
   };
 }
 
