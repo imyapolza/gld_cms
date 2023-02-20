@@ -1,10 +1,10 @@
-import clsx from "clsx";
-import Button from "components/Button/Button";
-import Input from "components/Input/Input";
-import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
-import { useRef, useState } from "react";
-import { FieldValues, useFieldArray, useForm } from "react-hook-form";
-import styles from "./styles.module.scss";
+import clsx from 'clsx';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import { useRef, useState } from 'react';
+import { FieldValues, useFieldArray, useForm } from 'react-hook-form';
+import styles from './styles.module.scss';
 
 interface Props {
   onSubmitAddDoor: (arg: FormData) => void;
@@ -13,7 +13,7 @@ interface Props {
 
 const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
   const [isLoadingImage, setLoadingImage] = useState<boolean>(false);
-  const [base64, setBase64] = useState<string>("");
+  const [base64, setBase64] = useState<string>('');
 
   const [blob, setBlob] = useState<Blob | null>(null);
 
@@ -25,31 +25,31 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    control
   } = useForm();
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "characteristics",
+    name: 'characteristics'
   });
 
   const onSubmit = async ({ name, price, characteristics }: FieldValues) => {
     let formData = new FormData();
 
     if (blob) {
-      formData.append("file", blob);
+      formData.append('file', blob);
     }
 
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("characteristics", JSON.stringify(characteristics));
+    formData.append('name', name);
+    formData.append('price', price);
+    formData.append('characteristics', JSON.stringify(characteristics));
 
     onSubmitAddDoor(formData);
   };
 
   const [dragActive, setDragActive] = useState<boolean>(false);
 
-  const types = ["image/png", "image/jpg", "image/jpeg"];
+  const types = ['image/png', 'image/jpg', 'image/jpeg'];
 
   function getBase64(file: Blob) {
     setFailedLoadSize(false);
@@ -62,7 +62,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
     } else {
       setFailedLoadSize(false);
       setFailedLoadSMall(false);
-      setBase64("");
+      setBase64('');
 
       if (Number((file.size / (1024 * 1024)).toFixed(2)) >= 1) {
         setFailedLoadSize(true);
@@ -73,29 +73,23 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         setLoadingImage(true);
         reader.onload = function () {
           const image = new Image();
-          if (typeof reader.result === "string") {
+          if (typeof reader.result === 'string') {
             image.src = reader.result;
           }
 
           image.onload = function () {
-            const height = image.height;
-            const width = image.width;
-            if (width < 750 || height < 1000) {
-              setFailedLoadSMall(true);
-              setDragActive(false);
-            } else {
-              if (typeof reader.result === "string") {
-                setBase64(reader.result);
-                setBlob(file);
-              }
+            if (typeof reader.result === 'string') {
+              setBase64(reader.result);
+              setBlob(file);
             }
+
             return true;
           };
 
           setLoadingImage(false);
         };
         reader.onerror = function (error) {
-          console.log("Error: ", error);
+          console.log('Error: ', error);
         };
       }
     }
@@ -106,9 +100,9 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
   ) {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setDragActive(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
     }
   };
@@ -140,7 +134,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
   };
 
   const onAddCharacteristic = () => {
-    append({ name: "", value: "" });
+    append({ name: '', value: '' });
   };
 
   const onDeleteCharacteristic = (index: number) => {
@@ -149,19 +143,19 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
   return (
     <form
-      className={styles["form-file-upload"]}
+      className={styles['form-file-upload']}
       onDragEnter={handleDrag}
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <Input
-          {...register("name", {
+          {...register('name', {
             required: true,
-            maxLength: 30,
+            maxLength: 30
           })}
-          label="Название:"
-          type="text"
-          placeholder="Название товара..."
+          label='Название:'
+          type='text'
+          placeholder='Название товара...'
         />
         {errors.name && (
           <span className={styles.error}>
@@ -170,14 +164,14 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         )}
 
         <Input
-          {...register("price", {
+          {...register('price', {
             required: true,
-            maxLength: 6,
+            maxLength: 6
           })}
-          label="Цена:"
+          label='Цена:'
           classNameLabel={styles.price}
-          type="number"
-          placeholder="Цена товара..."
+          type='number'
+          placeholder='Цена товара...'
         />
         {errors.price && <span className={styles.error}>Максимум 6 цифр</span>}
 
@@ -188,11 +182,11 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
               <div className={styles.characteristics}>
                 <input
                   {...register(`characteristics.${index}.name`, {
-                    required: true,
+                    required: true
                   })}
                   key={field.id}
                   className={styles.name_input}
-                  type="text"
+                  type='text'
                   minLength={3}
                   maxLength={100}
                   placeholder={`Заголовок ${index + 1}...`}
@@ -200,7 +194,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
 
                 <input
                   {...register(`characteristics.${index}.value`, {
-                    required: true,
+                    required: true
                   })}
                   key={
                     field.id +
@@ -208,7 +202,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
                     Math.random().toString(36).substring(2)
                   }
                   className={styles.name_input}
-                  type="text"
+                  type='text'
                   minLength={3}
                   maxLength={100}
                   placeholder={`Характеристика ${index + 1}...`}
@@ -217,7 +211,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
               <button
                 className={styles.characteristics_delete}
                 onClick={() => onDeleteCharacteristic(index)}
-                type="button"
+                type='button'
               >
                 Удалить характеристику
               </button>
@@ -229,7 +223,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         )}
         <label className={styles.label}>Изображение:</label>
         {base64 && (
-          <button className={styles.delete_img} onClick={() => setBase64("")}>
+          <button className={styles.delete_img} onClick={() => setBase64('')}>
             Удалить изображение
           </button>
         )}
@@ -255,26 +249,26 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         {!base64 && (
           <>
             <input
-              className={styles["input-file-upload"]}
+              className={styles['input-file-upload']}
               ref={inputRef}
-              type="file"
+              type='file'
               multiple={true}
               onChange={handleChange}
             />
             <label
-              id={styles["label-file-upload"]}
-              htmlFor="input-file-upload"
-              className={dragActive ? "drag-active" : ""}
+              id={styles['label-file-upload']}
+              htmlFor='input-file-upload'
+              className={dragActive ? 'drag-active' : ''}
               onClick={onButtonClick}
             >
               <div
                 className={clsx(styles.block, {
-                  [styles.block_dragover]: dragActive,
+                  [styles.block_dragover]: dragActive
                 })}
               >
-                <p className={styles["drag-drop-text"]}>
+                <p className={styles['drag-drop-text']}>
                   {dragActive ? (
-                    "Отпустите изображение"
+                    'Отпустите изображение'
                   ) : (
                     <>
                       <>Перетащите изображение сюда</>
@@ -299,7 +293,7 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
         )}
         {dragActive && (
           <div
-            className={styles["drag-file-element"]}
+            className={styles['drag-file-element']}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -311,16 +305,16 @@ const AddCardForm = ({ onSubmitAddDoor, isLoadingAdd }: Props): JSX.Element => {
             <img
               className={styles.file_preview}
               src={base64}
-              alt="preload image"
+              alt='preload image'
             />
           )}
         </div>
         {base64 && (
           <>
             {isLoadingAdd ? (
-              <LoadingSpinner style={{ height: "100px" }} />
+              <LoadingSpinner style={{ height: '100px' }} />
             ) : (
-              <Button className={styles.button} width={"100%"} type="submit">
+              <Button className={styles.button} width={'100%'} type='submit'>
                 Сохранить
               </Button>
             )}
